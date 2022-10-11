@@ -65,18 +65,6 @@
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_media_downloaded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
             <com.tistory.zladnrms.roundablelayout.RoundableLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
@@ -286,6 +274,18 @@
 
 
             </com.tistory.zladnrms.roundablelayout.RoundableLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_media_downloaded"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
 
 
         </LinearLayout>
