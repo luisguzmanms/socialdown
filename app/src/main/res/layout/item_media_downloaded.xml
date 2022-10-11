@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="3dp">
+
+    <ImageView
+        android:id="@+id/iv_media"
+        android:layout_width="172dp"
+        android:layout_height="235dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_download" />
+
+    <ImageView
+        android:id="@+id/iv_gradiant"
+        android:layout_width="172dp"
+        android:layout_height="235dp"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/gradiant_media_insta" />
+
+    <ImageView
+        android:id="@+id/iv_typeApp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="right"
+        android:layout_margin="5dp"
+        tools:ignore="ImageContrastCheck" />
+
+    <ImageView
+        android:id="@+id/iv_typePost"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+</androidx.cardview.widget.CardView>
