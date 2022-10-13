@@ -26,6 +26,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -37,13 +44,12 @@ android {
 }
 
 dependencies {
-
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation project(path: ':DialogX')
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -63,10 +69,6 @@ dependencies {
     // Dagger https://github.com/google/dagger
     implementation 'com.google.dagger:dagger:2.28.3'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.28.3'
-
-    // DialogX https://github.com/kongzue/DialogX/tree/master
-   // implementation "com.github.kongzue.dialogx:DialogX:0.0.46.beta1"
-   // implementation "com.github.kongzue.DialogX:DialogXMaterialYou:0.0.46.beta1"
 
     // Material Design
     implementation "com.google.android.material:material:1.6.1"
@@ -91,4 +93,7 @@ dependencies {
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.8'
 
+   // DialogX https://github.com/kongzue/DialogX/tree/master
+    implementation files('libs/DialogX-0.0.46.aar')
+    implementation files('libs/DialogXMaterialYou-0.0.46.aar')
 }
