@@ -37,43 +37,26 @@ class MainActivity : AppCompatActivity() {
         initDownloadsRV()
         animateViews()
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun initViewModel() {
         // ViewModel y Factory
         val factory = MainViewModelFactory()
         viewModel = ViewModelProvider(this, factory)[MainViewModel::class.java]
 
-        binding.etLink.addTextChangedListener(object : TextWatcher {
-
-            override fun afterTextChanged(s: Editable) {}
-
-            override fun beforeTextChanged(
-                s: CharSequence, start: Int,
-                count: Int, after: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                text: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
-                when (checkAppTypeUrl(text.toString())) {
-                    TIKTOK -> viewModel.updateTitleDownloader("Tiktok\nDownloader")
-                    INSTAGRAM -> viewModel.updateTitleDownloader("Instagram\nDownloader")
-                    FACEBOOK -> viewModel.updateTitleDownloader("Facebook\nDownloader")
-                    NONE -> viewModel.updateTitleDownloader("SocialDown")
-                }
-
-            }
-        })
-
+        // Observer
         viewModel.lstMediaDownloadedDB.observe(this) {
-            it.let {
-                adapter.updateList(it as ArrayList<ModelMediaDownloaded>)
-                adapter.notifyDataSetChanged()
-            }
-            if (!it.isNullOrEmpty()) {
-                DialogXUtils.Toast.showSuccess("items en lstData =${it.size}")
+            if (it.isNotEmpty()) {
+                binding.cnEmpty.visibility = View.GONE
+                it.let {
+                    adapter.updateList(it as ArrayList<ModelMediaDownloaded>)
+                    adapter.notifyDataSetChanged()
+                    binding.tvDownloadCount.text = "${it.size} files"
+                }
             } else {
-                DialogXUtils.Toast.showError("NO hay tiems en lstDataDB")
+                binding.cnEmpty.visibility = View.VISIBLE
+                SDAnimation().setSDAnimation(this@MainActivity, binding.cnEmpty, R.anim.scale_up)
             }
         }
 
