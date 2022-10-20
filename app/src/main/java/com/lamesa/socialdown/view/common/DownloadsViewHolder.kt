@@ -9,6 +9,7 @@ import com.lamesa.socialdown.R
 import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.databinding.ItemMediaDownloadedBinding
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
+import com.lamesa.socialdown.utils.SDAnimation
 import com.lamesa.socialdown.utils.SocialHelper
 import java.io.File
 
@@ -62,6 +63,7 @@ class DownloadsViewHolder(private val context: Context, view: View) :
             binding.ivMedia.setImageBitmap(bMap)
         }
 
+        SDAnimation().setSDAnimation(context, binding.content, R.anim.anim_alpha_in)
     }
 
 
