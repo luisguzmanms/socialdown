@@ -77,26 +77,31 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.tvTitleDownloader.observe(this) {
+            animateTypeDownloader(it)
+        }
+    }
+
+    private fun initDownloadsRV() {
+        adapter = DownloadsAdapter(this@MainActivity)
+        binding.rvMediaDownloaded.layoutManager = GridLayoutManager(this, 2)
+        binding.rvMediaDownloaded.adapter = adapter
     }
 
     /**
      * Alternativa de animaciones (en un futuro implementar MotionLayout)
      */
     private fun animateViews() {
+        SDAnimation().setSDAnimation(this, binding.main, R.anim.anim_slide_top_in)
+        SDAnimation().setSDAnimation(this, binding.rvMediaDownloaded, R.anim.anim_slide_bottom_in)
+        SDAnimation().setSDAnimation(
+            this,
+            arrayOf(binding.tvTitleDownloader, binding.svGetMedia, binding.svLinearLayout),
+            R.anim.slide_up_fade_in
+        )
+    }
 
-        binding.tvTitleDownloader.setOnClickListener {
-            SDAnimation().setSDAnimation(
-                this,
-                binding.tvTitleDownloader,
-                R.anim.learn_item_anim_fall_down
-            )
-            SDAnimation().setSDAnimation(this, binding.svGetMedia, R.anim.learn_item_anim_fall_down)
-            SDAnimation().setSDAnimation(
-                this,
-                binding.svLinearLayout,
-                R.anim.learn_item_anim_fall_down
-            )
-        }
+    private fun clickListener() {
         binding.ivDownload.setOnClickListener {
             SDAnimation().setSDAnimation(this, binding.ivDownload, R.anim.scale_up)
             searchByLink(binding.etLink.text.toString())
@@ -108,10 +113,48 @@ class MainActivity : AppCompatActivity() {
         SDAnimation().setSDAnimation(this, binding.svLinearLayout, R.anim.slide_up_fade_in)
     }
 
-    private fun initDownloadsRV() {
-        adapter = DownloadsAdapter(this@MainActivity)
-        binding.rvMediaDownloaded.layoutManager = GridLayoutManager(this, 2)
-        binding.rvMediaDownloaded.adapter = adapter
+    private fun animateTypeDownloader(type: String) {
+        binding.tvWelcome.visibility = View.GONE
+        if (type.lowercase().contains(AppDownloader.TIKTOK.app.lowercase())) {
+            binding.tvTitleDownloader.text = "Tiktok\nDownloader"
+            binding.tvSubTitleDownloader.text = AppDownloader.TIKTOK.mediaSupported
+            binding.mainLayout.setBackgroundResource(R.drawable.gradiant_tiktok)
+            binding.ivTiktok.setBackgroundResource(AppDownloader.TIKTOK.iconOn)
+            SDAnimation().setSDAnimation(
+                this,
+                arrayOf(binding.mainLayout, binding.ivTiktok),
+                R.anim.fade_in_main
+            )
+        } else if (type.lowercase().contains(AppDownloader.INSTAGRAM.app.lowercase())) {
+            binding.tvTitleDownloader.text = "Instagram\nDownloader"
+            binding.tvSubTitleDownloader.text = AppDownloader.INSTAGRAM.mediaSupported
+            binding.mainLayout.setBackgroundResource(R.drawable.gradiant_instagram)
+            binding.ivInstagram.setBackgroundResource(AppDownloader.INSTAGRAM.iconOn)
+            SDAnimation().setSDAnimation(
+                this,
+                arrayOf(binding.mainLayout, binding.ivInstagram),
+                R.anim.fade_in_main
+            )
+        } else if (type.lowercase().contains(AppDownloader.FACEBOOK.app.lowercase())) {
+            binding.tvTitleDownloader.text = "Facebook\nDownloader"
+            binding.tvSubTitleDownloader.text = AppDownloader.FACEBOOK.mediaSupported
+            binding.mainLayout.setBackgroundResource(R.drawable.gradiant_facebook)
+            binding.ivFacebook.setBackgroundResource(AppDownloader.FACEBOOK.iconOn)
+            SDAnimation().setSDAnimation(
+                this,
+                arrayOf(binding.mainLayout, binding.ivFacebook),
+                R.anim.fade_in_main
+            )
+        } else {
+            binding.tvWelcome.visibility = View.VISIBLE
+            binding.tvTitleDownloader.text = "SocialDown"
+            binding.tvSubTitleDownloader.text = AppDownloader.INSTAGRAM.mediaSupported
+            binding.mainLayout.setBackgroundResource(R.drawable.gradiant_main)
+            binding.ivInstagram.setBackgroundResource(AppDownloader.INSTAGRAM.iconOff)
+            binding.ivFacebook.setBackgroundResource(AppDownloader.FACEBOOK.iconOff)
+            binding.ivTiktok.setBackgroundResource(AppDownloader.TIKTOK.iconOff)
+            SDAnimation().setSDAnimation(this, binding.mainLayout, R.anim.fade_in_main)
+        }
     }
 
     private fun searchByLink(queryLink: String) {

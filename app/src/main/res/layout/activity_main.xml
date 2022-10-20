@@ -66,9 +66,10 @@
             </LinearLayout>
 
             <com.tistory.zladnrms.roundablelayout.RoundableLayout
-                android:id="@+id/mainLayout"
+                android:id="@+id/main"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:background="@drawable/gradiant_main"
                 android:elevation="5dp"
                 android:translationZ="5dp"
                 app:cornerLeftBottom="40dp"
@@ -76,13 +77,10 @@
                 app:cornerLeftTop="0dp"
                 app:cornerRightBottom="40dp"
                 app:cornerRightSide="0dp"
-                app:cornerRightTop="0dp"
-                app:dashLineGap="4dp"
-                app:dashLineWidth="10dp"
-                app:strokeLineColor="@color/purple_700"
-                app:strokeLineWidth="2dp">
+                app:cornerRightTop="0dp">
 
                 <RelativeLayout
+                    android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/gradiant_main"
@@ -133,7 +131,7 @@
                             android:fontFamily="@font/opensans_medium"
                             android:text="Images - Reels - Stories - Videos"
                             android:textColor="@color/design_default_color_background"
-                            android:textSize="12sp"
+                            android:textSize="14sp"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </LinearLayout>
@@ -181,6 +179,15 @@
                                 android:layout_height="25dp"
                                 android:layout_margin="5dp"
                                 android:src="@drawable/ic_link" />
+
+                            <ImageView
+                                android:id="@+id/iv_clean"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:src="@drawable/ic_clean2"
+                                android:visibility="gone" />
 
                             <ImageView
                                 android:id="@+id/iv_download"
@@ -274,19 +281,6 @@
 
 
             </com.tistory.zladnrms.roundablelayout.RoundableLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_media_downloaded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="1.0" />
-
 
         </LinearLayout>
     </ScrollView>
