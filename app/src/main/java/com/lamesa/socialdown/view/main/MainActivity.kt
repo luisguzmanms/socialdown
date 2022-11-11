@@ -156,4 +156,45 @@ class MainActivity : AppCompatActivity() {
             PopTip.show("Sin conexión a internet").iconError()
         }
     }
+
+    private fun searchByLink(queryLink: String) {
+        animateTypeDownloader(checkAppTypeUrl(queryLink).toString())
+        if (isOnline(this)) {
+            if (isNetworkUrl(queryLink)) {
+                when (checkAppTypeUrl(queryLink)) {
+                    TIKTOK -> APIHelper.executeApi(this, TIKTOK, queryLink)
+                    INSTAGRAM -> APIHelper.executeApi(this, INSTAGRAM, queryLink)
+                    FACEBOOK -> APIHelper.executeApi(this, FACEBOOK, queryLink)
+                    else -> DialogXUtils.NotificationX.showError(getString(R.string.text_linkNoSupported))
+                }
+            } else {
+                DialogXUtils.NotificationX.showError(getString(R.string.text_linkNotValid))
+            }
+        } else {
+            DialogXUtils.NotificationX.showError(getString(R.string.text_NoInternetConnection))
+        }
+    }
+
+    private fun checkClipboard(): String {
+        val clipBoardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val linkClipboard = clipBoardManager.primaryClip?.getItemAt(0)?.text?.toString()
+        if (!linkClipboard.isNullOrEmpty()) {
+            if (checkAppTypeUrl(linkClipboard) != NONE) {
+                return linkClipboard
+            }
+        }
+        return ""
+    }
+
+    private fun hideSoftKeyboard() {
+        val inputMethodManager: InputMethodManager = this@MainActivity.getSystemService(
+            Activity.INPUT_METHOD_SERVICE
+        ) as InputMethodManager
+        if (inputMethodManager.isAcceptingText) {
+            inputMethodManager.hideSoftInputFromWindow(
+                this@MainActivity.currentFocus!!.windowToken,
+                0
+            )
+        }
+    }
 }
