@@ -1,9 +1,18 @@
 package com.lamesa.socialdown.app
 
 import android.app.Application
+import android.content.res.Resources
+import com.google.firebase.FirebaseApp
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.kongzue.dialogx.DialogX
+import com.kongzue.dialogx.style.MIUIStyle
+import com.lamesa.socialdown.app.SDApp.Analytics.mixpanel
 import com.lamesa.socialdown.app.SDApp.Context.roomDatabase
 import com.lamesa.socialdown.data.db.MediaDB
 import com.lamesa.socialdown.di.RoomModule
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
