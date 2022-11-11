@@ -19,11 +19,20 @@
         android:clickable="true"
         android:focusable="true">
 
+        <com.github.ybq.android.spinkit.SpinKitView
+            android:id="@+id/spin_kit"
+            style="@style/SpinKitView.Large"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:SpinKit_Style="DoubleBounce"
+            android:layout_gravity="center"
+            app:SpinKit_Color="#7AC9C9C9" />
+
         <ImageView
             android:id="@+id/iv_images"
             android:layout_width="match_parent"
             android:layout_height="450dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"/>
 
         <ImageView
             android:layout_width="match_parent"

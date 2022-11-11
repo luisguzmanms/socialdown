@@ -17,7 +17,7 @@
         android:layout_marginBottom="0dp"
         android:fontFamily="@font/opensans_bold"
         android:text="@string/app_name"
-        android:textSize="28sp"></TextView>
+        android:textSize="28sp"/>
 
     <TextView
         android:id="@+id/tv_descDialog"
@@ -30,7 +30,7 @@
         android:fontFamily="@font/opensans_regular"
         android:text="Descarga tus publicaciones favoritas."
         android:textColor="#6A727C"
-        android:textSize="18sp"></TextView>
+        android:textSize="18sp" />
 
     <FrameLayout
         android:layout_width="wrap_content"
