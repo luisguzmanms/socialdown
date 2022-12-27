@@ -1,4 +1,4 @@
-package com.lamesa.socialdown.data.network
+package com.lamesa.socialdown.data.remote
 
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
