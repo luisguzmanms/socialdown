@@ -5,11 +5,12 @@ import androidx.lifecycle.asLiveData
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.domain.repository.RoomRepository
 
-class GetAllMediaUseCase {
+class GetAllMediaByAppUseCase {
 
     private val roomRepository = RoomRepository()
 
-    operator fun invoke(): LiveData<List<ModelMediaDownloaded>> {
-        return roomRepository.getAllMediaFromRoom().asLiveData()
+    operator fun invoke(app : String): LiveData<List<ModelMediaDownloaded>> {
+        return roomRepository.getAllMediaByApp(app).asLiveData()
     }
+
 }
