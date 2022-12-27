@@ -1,70 +1,212 @@
-package com.lamesa.socialdown.viewholder
+package com.lamesa.socialdown.view.common
 
 import android.content.Context
+import android.content.Intent
 import android.media.ThumbnailUtils
+import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.view.View
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.lamesa.socialdown.R
-import com.lamesa.socialdown.data.remote.APIHelper
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.kongzue.dialogx.dialogs.BottomDialog
+import com.kongzue.dialogx.dialogs.BottomMenu
+import com.kongzue.dialogx.interfaces.OnDialogButtonClickListener
+import com.kongzue.dialogx.interfaces.OnIconChangeCallBack
+import com.kongzue.dialogx.interfaces.OnMenuItemClickListener
+import com.lamesa.socialdown.BuildConfig
+import com.lamesa.socialdown.R.*
+import com.lamesa.socialdown.data.remote.APIHelper.AppApi.*
 import com.lamesa.socialdown.databinding.ItemMediaDownloadedBinding
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
+import com.lamesa.socialdown.downloader.DownloaderHelper
+import com.lamesa.socialdown.usecase.DeleteMediaUseCase
+import com.lamesa.socialdown.utils.DialogXUtils
 import com.lamesa.socialdown.utils.SDAnimation
-import com.lamesa.socialdown.utils.SocialHelper
+import com.lamesa.socialdown.utils.SocialHelper.AppDownloader
+import com.lamesa.socialdown.utils.SocialHelper.MediaType.*
+import com.lamesa.socialdown.utils.SocialHelper.MediaType.NONE
+import com.lamesa.socialdown.utils.SocialHelper.checkExtensionFile
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
-
 
 class DownloadsViewHolder(private val context: Context, view: View) :
     RecyclerView.ViewHolder(view) {
 
     private val binding = ItemMediaDownloadedBinding.bind(view)
 
-    fun bind(video: ModelMediaDownloaded) {
+    fun bind(media: ModelMediaDownloaded) {
 
-        when (video.fromApp) {
-            APIHelper.AppApi.TIKTOK.toString() -> binding.ivTypeApp.setImageResource(SocialHelper.AppTypeIconOn.TIKTOK.icon)
-            APIHelper.AppApi.INSTAGRAM.toString() -> binding.ivTypeApp.setImageResource(SocialHelper.AppTypeIconOn.INSTAGRAM.icon)
-            APIHelper.AppApi.FACEBOOK.toString() -> binding.ivTypeApp.setImageResource(SocialHelper.AppTypeIconOn.FACEBOOK.icon)
-            else -> binding.ivTypeApp.setImageResource(SocialHelper.AppTypeIconOn.NONE.icon)
+        when (media.fromApp) {
+            TIKTOK.id -> binding.ivTypeApp.setImageResource(AppDownloader.TIKTOK.iconOn)
+            INSTAGRAM.id -> {
+                binding.ivTypeApp.setImageResource(AppDownloader.INSTAGRAM.iconOn)
+            }
+            FACEBOOK.id -> binding.ivTypeApp.setImageResource(AppDownloader.FACEBOOK.iconOn)
+            else -> {}
         }
 
-        when (video.fromApp) {
-            APIHelper.AppApi.TIKTOK.toString() -> binding.ivGradiant.setImageResource(R.drawable.gradiant_media_tiktok)
-            APIHelper.AppApi.INSTAGRAM.toString() -> binding.ivGradiant.setImageResource(R.drawable.gradiant_media_insta)
-            APIHelper.AppApi.FACEBOOK.toString() -> binding.ivGradiant.setImageResource(R.drawable.gradiant_media_face)
-            else -> binding.ivGradiant.setImageResource(R.drawable.gradiant_media_grey)
+        when (media.fromApp) {
+            TIKTOK.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_tiktok)
+            INSTAGRAM.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_insta)
+            FACEBOOK.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_face)
+            else -> binding.ivGradiant.setImageResource(drawable.gradiant_media_grey)
         }
 
-        when (video.mediaType) {
-            SocialHelper.MediaType.VIDEO.type -> binding.ivTypePost.setImageResource(SocialHelper.MediaType.VIDEO.icon)
-            SocialHelper.MediaType.REEL.type -> binding.ivTypePost.setImageResource(SocialHelper.MediaType.REEL.icon)
-            SocialHelper.MediaType.STORY.type -> binding.ivTypePost.setImageResource(SocialHelper.MediaType.STORY.icon)
-            SocialHelper.MediaType.POST.type -> binding.ivTypePost.setImageResource(SocialHelper.MediaType.POST.icon)
-            SocialHelper.MediaType.IGTV.type -> binding.ivTypePost.setImageResource(SocialHelper.MediaType.IGTV.icon)
-            else -> binding.ivTypeApp.setImageResource(SocialHelper.MediaType.NONE.icon)
+        when (media.mediaType) {
+            VIDEO.type -> binding.ivTypePost.setImageResource(VIDEO.icon)
+            REEL.type -> binding.ivTypePost.setImageResource(REEL.icon)
+            STORY.type -> binding.ivTypePost.setImageResource(STORY.icon)
+            POST.type -> binding.ivTypePost.setImageResource(POST.icon)
+            IGTV.type -> binding.ivTypePost.setImageResource(IGTV.icon)
+            else -> binding.ivTypeApp.setImageResource(NONE.icon)
         }
 
-
-        /*
-        Glide.with(context)
-            .asBitmap()
-            .load(Uri.fromFile(File(video.filePatch)))
-            .placeholder(R.drawable.ic_descargar)
-            .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.DATA)
-            .into(binding.ivMedia)
-         */
-
-        if (File(video.filePatch).exists()) {
-            val bMap = ThumbnailUtils.createVideoThumbnail(
-                video.filePatch,
-                MediaStore.Video.Thumbnails.MINI_KIND
-            )
-            binding.ivMedia.setImageBitmap(bMap)
+        if (File(media.filePatch).exists()) {
+            if (checkExtensionFile(media.filePatch) == DownloaderHelper.ExtensionFile.MP4) {
+                val bMap = ThumbnailUtils.createVideoThumbnail(
+                    media.filePatch,
+                    MediaStore.Video.Thumbnails.MINI_KIND
+                )
+                binding.ivMedia.setImageBitmap(bMap)
+            } else {
+                Glide.with(context)
+                    .asBitmap()
+                    .load(Uri.fromFile(File(media.filePatch)))
+                    .placeholder(drawable.ic_download)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .into(binding.ivMedia)
+            }
         }
 
-        SDAnimation().setSDAnimation(context, binding.content, R.anim.anim_alpha_in)
+        SDAnimation(context).setSDAnimation(
+            binding.content,
+            anim.anim_alpha_in
+        )
+
+        binding.content.setOnClickListener {
+            dialogOptions(media)
+        }
+        binding.content.setOnLongClickListener {
+            deleteItem(media)
+            true
+        }
     }
 
+    private fun openFile(media: ModelMediaDownloaded) {
+        var mimeType = ""
+        val intent = Intent(Intent.ACTION_VIEW)
+        // val uri = Uri.fromFile(File(media.filePatch))
+        val uri: Uri? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            FileProvider.getUriForFile(
+                context,
+                BuildConfig.APPLICATION_ID + ".provider",
+                File(media.filePatch)
+            )
+        } else {
+            Uri.fromFile(File(media.filePatch));
+        }
+
+        if (File(media.filePatch).exists() && uri != null) {
+            if (media.filePatch.contains(".jpg")) mimeType = "image/jpg"
+            if (media.filePatch.contains(".mp4")) mimeType = "video/mp4"
+
+            if (mimeType.isNotEmpty()) {
+                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                intent.setDataAndType(uri, mimeType)
+                context.startActivity(intent)
+            }
+        } else {
+            DialogXUtils.ToastX.showError(context.getString(string.error_openFile))
+        }
+    }
+
+    private fun dialogOptions(media: ModelMediaDownloaded) {
+        BottomMenu.show(
+            arrayOf(
+                context.getString(string.option_open),
+                context.getString(string.option_share),
+                context.getString(string.option_delete)
+            )
+        )
+            .setOnIconChangeCallBack(object : OnIconChangeCallBack<BottomMenu?>(true) {
+                override fun getIcon(dialog: BottomMenu?, index: Int, menuText: String?): Int {
+                    when (menuText) {
+                        context.getString(string.option_open) -> return drawable.ic_open
+                        context.getString(string.option_share) -> return drawable.ic_send
+                        context.getString(string.option_delete) -> return drawable.ic_delete
+                    }
+                    dialog!!.hide()
+                    return 0
+                }
+            }).setOnMenuItemClickListener(object : OnMenuItemClickListener<BottomMenu?> {
+                override fun onClick(
+                    dialog: BottomMenu?,
+                    text: CharSequence?,
+                    index: Int
+                ): Boolean {
+                    when (index) {
+                        0 -> openFile(media)
+                        1 -> shareItem(media)
+                        2 -> deleteItem(media)
+                    }
+                    dialog!!.hide()
+                    return true
+                }
+            })
+    }
+
+    private fun deleteItem(media: ModelMediaDownloaded) {
+        BottomDialog.show(context.getString(string.dialog_deleteItem), "")
+            .setCancelButton(
+                context.getString(string.text_delete),
+                OnDialogButtonClickListener { dialog, v ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        DeleteMediaUseCase().invoke(media)
+                        if (File(media.filePatch).exists()) File(media.filePatch).delete()
+                    }
+                    dialog.hide()
+                    DialogXUtils.ToastX.showSuccess(context.getString(string.text_itemDelete))
+                        .showShort()
+                    true
+                })
+    }
+
+    private fun shareItem(media: ModelMediaDownloaded) {
+        var mimeType = ""
+        val uri: Uri? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            FileProvider.getUriForFile(
+                context,
+                BuildConfig.APPLICATION_ID + ".provider",
+                File(media.filePatch)
+            )
+        } else {
+            Uri.fromFile(File(media.filePatch));
+        }
+
+        if (File(media.filePatch).exists() && uri != null) {
+            if (media.filePatch.contains("jpg")) mimeType = "image/jpg"
+            if (media.filePatch.contains("mp4")) mimeType = "video/mp4"
+            if (mimeType.isNotEmpty()) {
+                val share = Intent()
+                share.action = Intent.ACTION_SEND
+                share.type = mimeType
+                share.putExtra(Intent.EXTRA_STREAM, uri)
+                context.startActivity(
+                    Intent.createChooser(
+                        share,
+                        context.getString(string.text_shareFile)
+                    )
+                )
+            }
+        } else {
+            DialogXUtils.ToastX.showError(context.getString(string.error_openFile))
+        }
+    }
 
 }
