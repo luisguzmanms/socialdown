@@ -1,4 +1,4 @@
-package com.lamesa.socialdown.data.network.api
+package com.lamesa.socialdown.data.remote.api
 
 import com.lamesa.socialdown.domain.response.instagram.InstaResMaatootz
 import retrofit2.Response
@@ -9,8 +9,8 @@ import retrofit2.http.Url
 
 /** Created by luis Mesa on 09/08/22 */
 interface APIInsta {
-    enum class APIs {
-        Maatootz
+    enum class APIs(val id: String) {
+        Maatootz("Maatootz")
     }
 
     /**

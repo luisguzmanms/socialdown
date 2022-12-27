@@ -1,4 +1,4 @@
-package com.lamesa.socialdown.data.network.api
+package com.lamesa.socialdown.data.remote.api
 
 import FaceResVikar
 import com.lamesa.socialdown.domain.response.facebook.FaceResCrashBash
@@ -10,14 +10,14 @@ import retrofit2.http.Url
 
 /** Created by luis Mesa on 09/08/22 */
 interface APIFacebook {
-    enum class APIs {
-        Crashbash,
-        Vikas
+    enum class APIs (var id: String){
+        Crashbash("Crashbash"),
+        Vikas("Vikas")
     }
 
     /**
      * url: https://rapidapi.com/CrashBash/api/socialdownloader/
-     * author: CrashBash
+     * author: Crashbash
      * X-RapidAPI-Host: instagram-downloader-download-instagram-videos-stories.p.rapidapi.com
      * baseUrl: https://socialdownloader.p.rapidapi.com/api/facebook/
      * queryPath: video?video_link=

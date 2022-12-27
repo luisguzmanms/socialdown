@@ -1,4 +1,4 @@
-package com.lamesa.socialdown.data.network.api
+package com.lamesa.socialdown.data.remote.api
 
 import com.lamesa.socialdown.domain.response.tiktok.TikTokResMaatootz
 import com.lamesa.socialdown.domain.response.tiktok.TikTokResMaatootz2
@@ -11,10 +11,10 @@ import retrofit2.http.Url
 
 /** Created by luis Mesa on 09/08/22 */
 interface APITiktok {
-    enum class APIs {
-        Maatootz,
-        Maatootz2,
-        Yi005
+    enum class APIs(val id: String) {
+        Maatootz("Maatootz"),
+        Maatootz2("Maatootz2"),
+        Yi005("Yi005")
     }
 
     /**
