@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
-import com.lamesa.socialdown.R
+import com.lamesa.socialdown.R.anim
+import com.lamesa.socialdown.R.layout
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
-import com.lamesa.socialdown.viewholder.DownloadsViewHolder
+import com.lamesa.socialdown.view.common.DownloadsViewHolder
 
 /** Created by luis Mesa on 08/08/22 */
 class DownloadsAdapter(private val context: Context) : RecyclerView.Adapter<DownloadsViewHolder>() {
@@ -21,7 +22,11 @@ class DownloadsAdapter(private val context: Context) : RecyclerView.Adapter<Down
         val layoutInflater = LayoutInflater.from(parent.context)
         return DownloadsViewHolder(
             context,
-            layoutInflater.inflate(R.layout.item_media_downloaded, parent, false)
+            layoutInflater.inflate(
+                layout.item_media_downloaded,
+                parent,
+                false
+            )
         )
     }
 
@@ -35,7 +40,7 @@ class DownloadsAdapter(private val context: Context) : RecyclerView.Adapter<Down
         holder.bind(media)
     }
 
-    fun updateList(newList: ArrayList<ModelMediaDownloaded>) {
+    internal fun updateList(newList: ArrayList<ModelMediaDownloaded>) {
         listMedia.clear()
         listMedia.addAll(newList)
     }
@@ -43,10 +48,9 @@ class DownloadsAdapter(private val context: Context) : RecyclerView.Adapter<Down
     private fun setAnimation(viewToAnimate: View, position: Int) {
         if (position > lastPosition) {
             val animation: Animation =
-                AnimationUtils.loadAnimation(context, com.lamesa.socialdown.R.anim.scale_up)
+                AnimationUtils.loadAnimation(context, anim.scale_up)
             viewToAnimate.startAnimation(animation)
             lastPosition = position
         }
     }
-
 }
