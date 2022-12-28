@@ -29,6 +29,16 @@ class SDAnalytics {
 
         mixpanel.track(MediaDataExtracted, props)
         //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(MediaDataExtracted) {
+            param("App", dataExtracted.app!!)
+            param("QueryLink", dataExtracted.queryLink!!)
+            param("TypeMedia", dataExtracted.mediaType!!)
+            param("CodeResponse", dataExtracted.codeResponse!!)
+            param("Body", dataExtracted.body!!)
+            param("Raw", dataExtracted.raw!!)
+        }
+        //endregion
     }
 
     fun eventErrorApiData(dataExtracted: ModelMediaDataExtracted) {
