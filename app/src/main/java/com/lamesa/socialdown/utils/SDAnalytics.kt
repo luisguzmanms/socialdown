@@ -6,6 +6,9 @@ import com.lamesa.socialdown.app.SDApp.Analytics.mixpanel
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.utils.Constansts.Analytics.ErrorApiData
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdClicked
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdClosed
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdOpened
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventError
 import com.lamesa.socialdown.utils.Constansts.Analytics.FailureDownload
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDataExtracted
@@ -82,7 +85,7 @@ class SDAnalytics {
         //endregion
     }
 
-    fun evenetFailureDownload(error: String, modelMediaDownloaded: ModelMediaDownloaded) {
+    fun eventFailureDownload(error: String, modelMediaDownloaded: ModelMediaDownloaded) {
         //region Analytics
         val props = JSONObject()
         props.put("App", modelMediaDownloaded.fromApp)
@@ -100,5 +103,46 @@ class SDAnalytics {
         }
         //endregion
     }
+
+    //region AdMob Analitycs
+    fun eventAdClicked(type: String) {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Ad", type)
+        mixpanel.track(EventAdClicked, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(FailureDownload) {
+            param("Ad", type)
+        }
+        //endregion
+    }
+
+    fun eventAdOpened(type: String) {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Ad", type)
+        mixpanel.track(EventAdOpened, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventAdOpened) {
+            param("Ad", type)
+        }
+        //endregion
+    }
+
+    fun eventAdClosed(type: String) {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Ad", type)
+        mixpanel.track(EventAdClosed, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventAdClosed) {
+            param("Ad", type)
+        }
+        //endregion
+    }
+    //enregion
 
 }

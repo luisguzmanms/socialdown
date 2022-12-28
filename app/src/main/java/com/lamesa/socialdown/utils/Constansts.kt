@@ -7,6 +7,9 @@ object Constansts {
         const val EventError = "EventError"
         const val MediaDownloaded = "MediaDownloaded"
         const val FailureDownload = "FailureDownload"
+        const val EventAdClicked = "AdClicked"
+        const val EventAdOpened = "AdOpened"
+        const val EventAdClosed = "AdClosed"
     }
 }
 
