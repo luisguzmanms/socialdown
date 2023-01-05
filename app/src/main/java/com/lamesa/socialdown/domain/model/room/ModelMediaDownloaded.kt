@@ -13,5 +13,6 @@ data class ModelMediaDownloaded(
     @ColumnInfo(name = "fileName") var fileName: String,
     @ColumnInfo(name = "folderPatch") val folderPatch: String,
     @ColumnInfo(name = "filePatch") val filePatch: String,
+    @ColumnInfo(name = "queryLink") val queryLink: String,
     @ColumnInfo(name = "dateInsert") val dateInsert: String
 )

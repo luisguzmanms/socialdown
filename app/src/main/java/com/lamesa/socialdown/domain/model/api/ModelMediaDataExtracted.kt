@@ -1,10 +1,9 @@
 package com.lamesa.socialdown.domain.model.api
 
-data class ModelApiDataExtracted(
+data class ModelMediaDataExtracted(
     var app: String? = "",
     var queryLink: String? = "",
-    var linkVideoOrMedia: String? = "",
-    var linkAudio: String? = "",
+    var linksToDownload: List<String>? = emptyList(),
     var codeResponse: String? = "",
     var body: String? = "",
     var raw: String? = "",

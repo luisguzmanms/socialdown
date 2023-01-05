@@ -1,10 +1,11 @@
 package com.lamesa.socialdown.domain.model.api
 
 data class ModelApi(
-    var api: String? = "",
+    var app: String? = "",
+    var autor: String? = "",
     var baseUrl: String? = "",
     var key: String? = "",
     var host: String? = "",
-    var app: String? = "",
+    val rapidApiUrl: String? = "",
     var queryPath: String? = ""
 )
