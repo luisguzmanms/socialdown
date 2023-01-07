@@ -6,7 +6,9 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import com.lamesa.socialdown.R
+import com.lamesa.socialdown.app.SDApp.Context.resources
 import com.lamesa.socialdown.data.remote.APIHelper
+import com.lamesa.socialdown.downloader.DownloaderHelper
 import java.util.*
 
 object SocialHelper {
@@ -153,4 +155,12 @@ object SocialHelper {
         }
         return DownloaderHelper.ExtensionFile.MP4
     }
+
+    internal fun chooseRandomString(input: String): String {
+        // Divide la cadena de texto por el separador ","
+        val strings = input.split(",")
+        // Selecciona un elemento aleatorio de la lista
+        return strings[Random().nextInt(strings.size)].trim()
+    }
+
 }
