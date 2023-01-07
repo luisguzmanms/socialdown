@@ -8,11 +8,14 @@ import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.utils.Constansts.Analytics.ErrorApiData
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdClicked
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdClosed
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdError
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdErrorSend
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdOpened
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventError
 import com.lamesa.socialdown.utils.Constansts.Analytics.FailureDownload
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDataExtracted
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDownloaded
+import com.mixpanel.android.mpmetrics.MixpanelAPI
 import org.json.JSONObject
 
 class SDAnalytics {
@@ -114,6 +117,10 @@ class SDAnalytics {
         //endregion
     }
 
+    fun eventTiming(): MixpanelAPI {
+        return mixpanel
+    }
+
     //region AdMob Analitycs
     fun eventAdClicked(type: String) {
         //region Analytics
@@ -152,6 +159,24 @@ class SDAnalytics {
             param("Ad", type)
         }
         //endregion
+    }
+
+    fun eventAdError(type: String, errorMessage: String) {
+        if (EventAdErrorSend != errorMessage) {
+            //region Analytics
+            val props = JSONObject()
+            props.put("Ad", type)
+            props.put("Error", errorMessage)
+            mixpanel.track(EventAdError, props)
+            //endregion
+            //region Firebase Analytics
+            firebaseAnalytics.logEvent(EventAdError) {
+                param("Ad", type)
+                param("Error", errorMessage)
+            }
+            //endregion
+            EventAdErrorSend = errorMessage
+        }
     }
     //enregion
 
