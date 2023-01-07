@@ -62,6 +62,9 @@ object SocialHelper {
         urlsTiktok.add("https://www.tiktok.com/")
         urlsTiktok.add("https://vm.tiktok.com/")
         urlsTiktok.add("https://www.vm.tiktok.com/")
+        urlsTiktok.add("https://vt.tiktok.com/")
+        urlsTiktok.add("https://www.vt.tiktok.com/")
+        urlsTiktok.add("tiktok.com")
 
         val urlsInstagram = arrayListOf<String>()
         urlsInstagram.add("https://www.instagram.com/")
