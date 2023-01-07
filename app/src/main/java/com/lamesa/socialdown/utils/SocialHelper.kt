@@ -115,6 +115,15 @@ object SocialHelper {
         return MediaType.NONE
     }
 
+    /**
+     * Algunos enlaces de instagram contienes una cadena de texto "?igshid" que provoa error en la APi
+     */
+    fun removeIgshid(url: String): String {
+        // Separa la cadena por el carácter "?" y toma la primera parte de la lista resultante
+        val parts = url.split("?")
+        return parts[0]
+    }
+
     internal fun randomString(): String {
         val id = UUID.randomUUID().toString().substring(0, 8)
         return (id)
