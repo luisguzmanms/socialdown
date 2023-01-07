@@ -21,17 +21,33 @@ object SocialHelper {
         NONE("", 0)
     }
 
-    enum class AppTypeIconOn(var icon: Int) {
-        INSTAGRAM(R.drawable.ic_instagram),
-        FACEBOOK(R.drawable.ic_facebook),
-        TIKTOK(R.drawable.ic_tiktok),
-        NONE(0)
-    }
-
-    enum class AppTypeIconOff(var icon: Int) {
-        INSTAGRAM(R.drawable.ic_instagram_off),
-        FACEBOOK(R.drawable.ic_facebook_off),
-        TIKTOK(R.drawable.ic_tiktok_off)
+    enum class AppDownloader(
+        val app: String,
+        val mediaSupported: String,
+        val background: Int,
+        val iconOn: Int,
+        val iconOff: Int
+    ) {
+        FACEBOOK(
+            "FACEBOOK", resources.getString(R.string.desc_facebook),
+            R.drawable.gradiant_facebook,
+            R.drawable.ic_facebook,
+            R.drawable.ic_facebook_off
+        ),
+        INSTAGRAM(
+            "INSTAGRAM",
+            resources.getString(R.string.desc_instagram),
+            R.drawable.gradiant_instagram,
+            R.drawable.ic_instagram,
+            R.drawable.ic_instagram_off
+        ),
+        TIKTOK(
+            "TIKTOK",
+            resources.getString(R.string.desc_tiktok),
+            R.drawable.gradiant_tiktok,
+            R.drawable.ic_tiktok,
+            R.drawable.ic_tiktok_off
+        ),
     }
 
     fun isOnline(context: Context): Boolean {
