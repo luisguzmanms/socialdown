@@ -144,4 +144,13 @@ object SocialHelper {
         val id = UUID.randomUUID().toString().substring(0, 8)
         return (id)
     }
+
+    internal fun checkExtensionFile(url: String?): DownloaderHelper.ExtensionFile {
+        if (url?.contains("jpg") == true || url?.contains("jpeg") == true) {
+            return DownloaderHelper.ExtensionFile.JPG
+        } else if (url?.contains("mp4") == true) {
+            return DownloaderHelper.ExtensionFile.MP4
+        }
+        return DownloaderHelper.ExtensionFile.MP4
+    }
 }
