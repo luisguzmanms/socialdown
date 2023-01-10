@@ -42,6 +42,9 @@ class SDAnalytics {
             param("Raw", dataExtracted.raw!!)
         }
         //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(MediaDataExtracted, props)
+        //endregion
     }
 
     fun eventErrorApiData(dataExtracted: ModelMediaDataExtracted) {
