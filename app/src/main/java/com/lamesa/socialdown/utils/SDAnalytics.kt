@@ -12,6 +12,10 @@ import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdError
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdErrorSend
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdOpened
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventError
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventShareApp
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventViewDialogMessage
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventViewDialogUpdate
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventViewStars
 import com.lamesa.socialdown.utils.Constansts.Analytics.FailureDownload
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDataExtracted
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDownloaded
@@ -29,6 +33,7 @@ class SDAnalytics {
         props.put("CodeResponse", dataExtracted.codeResponse)
         props.put("Body", dataExtracted.body)
         props.put("Raw", dataExtracted.raw)
+        props.put("Key", dataExtracted.key)
 
         mixpanel.track(MediaDataExtracted, props)
         //endregion
@@ -40,6 +45,7 @@ class SDAnalytics {
             param("CodeResponse", dataExtracted.codeResponse!!)
             param("Body", dataExtracted.body!!)
             param("Raw", dataExtracted.raw!!)
+            param("Key", dataExtracted.key!!)
         }
         //endregion
         //region Amplitude Analytics
@@ -56,6 +62,7 @@ class SDAnalytics {
         props.put("CodeResponse", dataExtracted.codeResponse)
         props.put("Body", dataExtracted.body)
         props.put("Raw", dataExtracted.raw)
+        props.put("Key", dataExtracted.key)
 
         mixpanel.track(ErrorApiData, props)
         //endregion
@@ -67,6 +74,7 @@ class SDAnalytics {
             param("CodeResponse", dataExtracted.codeResponse!!)
             param("Body", dataExtracted.body!!)
             param("Raw", dataExtracted.raw!!)
+            param("Key", dataExtracted.key!!)
         }
         //endregion
     }
@@ -182,5 +190,69 @@ class SDAnalytics {
         }
     }
     //enregion
+
+    fun eventShareApp() {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Event", EventShareApp)
+        mixpanel.track(EventAdError, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventShareApp) {
+            param("Event", EventShareApp)
+        }
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventShareApp, props)
+        //endregion
+    }
+
+    fun eventViewUpdate() {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Event", EventViewDialogUpdate)
+        mixpanel.track(EventAdError, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventViewDialogUpdate) {
+            param("Event", EventShareApp)
+        }
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventViewDialogUpdate, props)
+        //endregion
+    }
+
+    fun eventViewMessage() {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Event", EventViewDialogMessage)
+        mixpanel.track(EventAdError, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventViewDialogMessage) {
+            param("Event", EventShareApp)
+        }
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventViewDialogMessage, props)
+        //endregion
+    }
+
+    fun eventViewStars() {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Event", EventViewStars)
+        mixpanel.track(EventAdError, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventViewStars) {
+            param("Event", EventShareApp)
+        }
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventViewStars, props)
+        //endregion
+    }
 
 }
