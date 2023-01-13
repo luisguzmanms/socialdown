@@ -195,7 +195,7 @@ class SDAnalytics {
         //region Analytics
         val props = JSONObject()
         props.put("Event", EventShareApp)
-        mixpanel.track(EventAdError, props)
+        mixpanel.track(EventShareApp, props)
         //endregion
         //region Firebase Analytics
         firebaseAnalytics.logEvent(EventShareApp) {
@@ -211,11 +211,11 @@ class SDAnalytics {
         //region Analytics
         val props = JSONObject()
         props.put("Event", EventViewDialogUpdate)
-        mixpanel.track(EventAdError, props)
+        mixpanel.track(EventViewDialogUpdate, props)
         //endregion
         //region Firebase Analytics
         firebaseAnalytics.logEvent(EventViewDialogUpdate) {
-            param("Event", EventShareApp)
+            param("Event", EventViewDialogUpdate)
         }
         //endregion
         //region Amplitude Analytics
@@ -227,11 +227,11 @@ class SDAnalytics {
         //region Analytics
         val props = JSONObject()
         props.put("Event", EventViewDialogMessage)
-        mixpanel.track(EventAdError, props)
+        mixpanel.track(EventViewDialogMessage, props)
         //endregion
         //region Firebase Analytics
         firebaseAnalytics.logEvent(EventViewDialogMessage) {
-            param("Event", EventShareApp)
+            param("Event", EventViewDialogMessage)
         }
         //endregion
         //region Amplitude Analytics
@@ -243,11 +243,11 @@ class SDAnalytics {
         //region Analytics
         val props = JSONObject()
         props.put("Event", EventViewStars)
-        mixpanel.track(EventAdError, props)
+        mixpanel.track(EventViewStars, props)
         //endregion
         //region Firebase Analytics
         firebaseAnalytics.logEvent(EventViewStars) {
-            param("Event", EventShareApp)
+            param("Event", EventViewStars)
         }
         //endregion
         //region Amplitude Analytics
