@@ -8,7 +8,6 @@ import com.coolerfall.download.DownloadRequest
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.utils.DialogXUtils
-import com.lamesa.socialdown.utils.PermissionsUtil
 import com.lamesa.socialdown.utils.SocialHelper
 import com.lamesa.socialdown.utils.SocialHelper.MediaType.IMAGE
 import com.lamesa.socialdown.utils.SocialHelper.MediaType.POST
