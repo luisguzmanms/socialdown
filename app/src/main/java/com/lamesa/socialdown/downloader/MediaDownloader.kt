@@ -7,10 +7,10 @@ import android.webkit.URLUtil
 import com.coolerfall.download.DownloadRequest
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
+import com.lamesa.socialdown.downloader.DownloaderHelper.ExtensionFile
 import com.lamesa.socialdown.utils.DialogXUtils
 import com.lamesa.socialdown.utils.SocialHelper
-import com.lamesa.socialdown.utils.SocialHelper.MediaType.IMAGE
-import com.lamesa.socialdown.utils.SocialHelper.MediaType.POST
+import com.lamesa.socialdown.utils.SocialHelper.MediaType.*
 import com.lamesa.socialdown.utils.SocialHelper.checkExtensionFile
 import com.lamesa.socialdown.utils.timeNow
 import java.io.File
@@ -34,9 +34,10 @@ class MediaDownloader(private val context: Context) {
 
         val nameFile = SocialHelper.randomString()
         val extensionFile = when (dataExtracted.mediaType) {
-            POST.toString() -> "." + checkExtensionFile(linkToDownload).toString().lowercase()
-            IMAGE.toString() -> "." + DownloaderHelper.ExtensionFile.JPG.toString().lowercase()
-            else -> "." + DownloaderHelper.ExtensionFile.MP4.toString().lowercase()
+            POST.type -> "." + checkExtensionFile(linkToDownload).toString().lowercase()
+            IMAGE.type -> "." + ExtensionFile.JPG.toString().lowercase()
+            STORY.type -> "." + checkExtensionFile(linkToDownload).toString().lowercase()
+            else -> "." + ExtensionFile.MP4.toString().lowercase()
         }
 
         val mediaFile = "$nameFile$extensionFile"
