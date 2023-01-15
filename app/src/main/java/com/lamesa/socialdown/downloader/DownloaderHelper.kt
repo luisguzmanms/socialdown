@@ -10,15 +10,17 @@ import com.coolerfall.download.*
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.kongzue.dialogx.dialogs.BottomDialog
-import com.kongzue.dialogx.interfaces.BaseDialog.getApplicationContext
+import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.lamesa.socialdown.R
 import com.lamesa.socialdown.adapter.PostSlideAdapter
+import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.usecase.AddMediaUseCase
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventTimingDownloadFile
 import com.lamesa.socialdown.utils.DialogXUtils
+import com.lamesa.socialdown.utils.DialogXUtils.ToastX
 import com.lamesa.socialdown.utils.SDAd
 import com.lamesa.socialdown.utils.SDAnalytics
 import com.lamesa.socialdown.utils.SocialHelper.AppDownloader.*
@@ -139,8 +141,8 @@ class DownloaderHelper(private val context: Context) {
             dialogDownloading!!.isCancelable = true
             dialogDownloading!!.dismiss()
 
-            DialogXUtils.ToastX.showSuccess(context.getString(R.string.text_successfulDownload))
-            SDAd().initVideoAd(context)
+            ToastX.showSuccess(context.getString(R.string.text_successfulDownload))
+            SDAd().showInterAd(context)
             SDAnalytics().eventTiming().track(EventTimingDownloadFile)
         }
 
@@ -161,14 +163,14 @@ class DownloaderHelper(private val context: Context) {
             dialogDownloading!!.isCancelable = true
 
             SDAnalytics().eventTiming().clearTimedEvent(EventTimingDownloadFile)
-            SDAd().initInterOrVideo(context)
+            SDAd().showInterAd(context)
         }
     }
 
     private fun dialogDownloading(): BottomDialog? {
         return BottomDialog.build(object : OnBindView<BottomDialog?>(R.layout.dialog_downloading) {
             override fun onBind(dialog: BottomDialog?, v: View?) {
-                SDAd().initNativeAdDownloading(getApplicationContext(), v)
+                SDAd().initBannerAdDownloading(v)
                 val progressBar = v!!.findViewById<LinearProgressIndicator>(R.id.progress_bar)
                 if (mediaDownloaded.fromApp.isNotEmpty()) {
                     when (mediaDownloaded.fromApp.uppercase()) {
@@ -186,18 +188,20 @@ class DownloaderHelper(private val context: Context) {
         println("btnDownload:: ${dataExtracted.linksToDownload}}")
         BottomDialog.show(object : OnBindView<BottomDialog?>(R.layout.dialog_post_slider) {
             override fun onBind(dialog: BottomDialog?, v: View?) {
-                var tvTitleDialog = v?.findViewById<TextView>(R.id.tv_titleDialog)
+                val tvTitleDialog = v?.findViewById<TextView>(R.id.tv_titleDialog)
                 val viewpager = v?.findViewById<ViewPager>(R.id.viewpager)
-                val btnDownload = v?.findViewById<MaterialButton>(R.id.btn_download)
+                val btnDownloadUnLock = v?.findViewById<MaterialButton>(R.id.btn_download_unlock)
+                val btnDownloadLock = v?.findViewById<MaterialButton>(R.id.btn_download_lock)
                 val viewPagerAdapter = PostSlideAdapter(context, linkPosts!!)
                 viewpager?.adapter = viewPagerAdapter
                 val indicator = v?.findViewById<CircleIndicator>(R.id.indicator)
                 indicator?.setViewPager(viewpager)
 
+                //region Cambiar colores de acuerdo a link
                 when (dataExtracted.app!!.uppercase()) {
-                    FACEBOOK.app -> (btnDownload!!.setBackgroundResource(FACEBOOK.background))
-                    INSTAGRAM.app -> btnDownload!!.setBackgroundResource(INSTAGRAM.background)
-                    TIKTOK.app -> btnDownload!!.setBackgroundResource(TIKTOK.background)
+                    FACEBOOK.app -> (btnDownloadUnLock!!.setBackgroundResource(FACEBOOK.background))
+                    INSTAGRAM.app -> btnDownloadUnLock!!.setBackgroundResource(INSTAGRAM.background)
+                    TIKTOK.app -> btnDownloadUnLock!!.setBackgroundResource(TIKTOK.background)
                 }
                 when (dataExtracted.app!!.uppercase()) {
                     FACEBOOK.app -> tvTitleDialog!!.text =
@@ -207,24 +211,55 @@ class DownloaderHelper(private val context: Context) {
                     TIKTOK.app -> tvTitleDialog!!.text =
                         context.getString(R.string.text_tiktokDownloader)
                 }
+                //endregion
 
-                btnDownload?.setOnClickListener {
-                    if (viewPagerAdapter.getlistToDownload().isNotEmpty()) {
-                        for (linkToDownload in viewPagerAdapter.getlistToDownload()) {
-                            MediaDownloader(context).downloadMedia(linkToDownload, dataExtracted)
-                            dialog!!.dismiss()
+                //region Decidir si mostrar anuncio para desbloquear descarga
+                if (SDAd().adToDownloadIsLoad()) {
+                    btnDownloadLock!!.visibility = View.VISIBLE
+                    btnDownloadLock.setOnClickListener {
+                        if (viewPagerAdapter.getlistToDownload().isNotEmpty()) {
+                            for (linkToDownload in viewPagerAdapter.getlistToDownload()) {
+                                SDAd().showAdToDodwnload(context, dialog)
+                                // si se cierra el dialogo desde onAdDismissedFullScreenContent, se iniciara la descarga
+                                dialog!!.dialogLifecycleCallback =
+                                    object : DialogLifecycleCallback<BottomDialog?>() {
+                                        override fun onDismiss(dialog: BottomDialog?) {
+                                            MediaDownloader(context).downloadMedia(
+                                                linkToDownload,
+                                                dataExtracted
+                                            )
+                                        }
+                                    }
+                            }
+                            println("btnDownload:: {${viewPagerAdapter.getlistToDownload()}}")
+                        } else {
+                            ToastX.showWarning(context.getString(R.string.text_selectToDownload))
                         }
-                        println("btnDownload:: {${viewPagerAdapter.getlistToDownload()}}")
-                    } else {
-                        DialogXUtils.ToastX.showWarning(context.getString(R.string.text_selectToDownload))
+                    }
+                } else {
+                    btnDownloadUnLock!!.visibility = View.VISIBLE
+                    btnDownloadUnLock.setOnClickListener {
+                        if (viewPagerAdapter.getlistToDownload().isNotEmpty()) {
+                            for (linkToDownload in viewPagerAdapter.getlistToDownload()) {
+                                MediaDownloader(context).downloadMedia(
+                                    linkToDownload,
+                                    dataExtracted
+                                )
+                                dialog!!.dismiss()
+                            }
+                            println("btnDownload:: {${viewPagerAdapter.getlistToDownload()}}")
+                        } else {
+                            ToastX.showWarning(context.getString(R.string.text_selectToDownload))
+                        }
                     }
                 }
+                //endregion
             }
         })
     }
 
     internal fun checkToDownload(dataExtracted: ModelMediaDataExtracted) {
-        if (dataExtracted.codeResponse == "200") {
+        if (dataExtracted.codeResponse == APIHelper.CodeApi.C_200.code.toString()) {
             if (!dataExtracted.linksToDownload.isNullOrEmpty() && !dataExtracted.body.toString()
                     .contains("private")
             ) {
@@ -243,10 +278,8 @@ class DownloaderHelper(private val context: Context) {
                 }
                 /** Se envia datos de error a Analytics */
                 SDAnalytics().eventErrorApiData(dataExtracted)
-                DialogXUtils.ToastX.showSuccess(context.getString(R.string.text_errorCode703))
+                ToastX.showSuccess("Error code: ${dataExtracted.codeResponse}")
             }
-        } else if (dataExtracted.codeResponse == "500") {
-            DialogXUtils.NotificationX.showError("Link is roung / private or there is unkown error !!")
         }
     }
 
