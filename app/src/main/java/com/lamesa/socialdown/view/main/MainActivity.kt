@@ -197,4 +197,22 @@ class MainActivity : AppCompatActivity() {
             )
         }
     }
+
+    // Detectar si se ha compartido contenido
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SHARE_APP_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // The user shared the content successfully
+                SDAnalytics().eventShareApp()
+            }
+        }
+        if (requestCode == SHARE_ITEM_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // The user shared the content successfully
+                SDAnalytics().eventShareItem()
+            }
+        }
+    }
+
 }
