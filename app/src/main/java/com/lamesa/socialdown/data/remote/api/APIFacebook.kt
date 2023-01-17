@@ -1,7 +1,7 @@
 package com.lamesa.socialdown.data.remote.api
 
-import FaceResVikar
 import com.lamesa.socialdown.domain.response.facebook.FaceResCrashBash
+import com.lamesa.socialdown.domain.response.facebook.FaceResVikar
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
