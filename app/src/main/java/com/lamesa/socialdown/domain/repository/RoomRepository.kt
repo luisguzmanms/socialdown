@@ -1,7 +1,5 @@
 package com.lamesa.socialdown.domain.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.asLiveData
 import com.lamesa.socialdown.app.SDApp.Context.roomDatabase
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import kotlinx.coroutines.flow.Flow
@@ -11,12 +9,20 @@ class RoomRepository @Inject constructor() {
 
     var room = roomDatabase
 
-    fun getAllMediaFromRoom(): LiveData<List<ModelMediaDownloaded>> {
-        return room.mediaDAO().getAllMedia().asLiveData()
+    fun getAllMediaFromRoom(): Flow<List<ModelMediaDownloaded>> {
+        return room.mediaDAO().getAllMedia()
     }
 
     fun getAllMediaByApp(app: String): Flow<List<ModelMediaDownloaded>> {
         return roomDatabase.mediaDAO().getAllMediaByApp(app)
+    }
+
+    suspend fun deleteMediaFromRoom(modelMediaDownloaded: ModelMediaDownloaded) {
+        return roomDatabase.mediaDAO().deleteMedia(modelMediaDownloaded)
+    }
+
+    suspend fun addMediaFromRoom(modelMediaDownloaded: ModelMediaDownloaded) {
+        return roomDatabase.mediaDAO().insertMedia(modelMediaDownloaded)
     }
 
 }
