@@ -10,9 +10,9 @@ import java.util.concurrent.TimeUnit
 object RetrofitHelper {
     fun getRetrofit(baseUrl: String): Retrofit {
         val client = OkHttpClient.Builder()
-            .connectTimeout(100, TimeUnit.SECONDS)
-            .connectionPool(ConnectionPool(0, 5, TimeUnit.MINUTES))
-            .readTimeout(100, TimeUnit.SECONDS).build()
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .connectionPool(ConnectionPool(10, 5, TimeUnit.MINUTES))
+            .readTimeout(120, TimeUnit.SECONDS).build()
         return Retrofit.Builder()
             .baseUrl(baseUrl).client(client)
             .addConverterFactory(GsonConverterFactory.create())

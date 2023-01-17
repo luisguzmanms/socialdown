@@ -8,7 +8,7 @@ import com.lamesa.socialdown.data.remote.api.APITiktok
 import com.lamesa.socialdown.domain.repository.FacebookRepository
 import com.lamesa.socialdown.domain.repository.InstagramRepository
 import com.lamesa.socialdown.domain.repository.TiktokRepository
-import com.lamesa.socialdown.utils.DialogXUtils
+import com.lamesa.socialdown.utils.SocialHelper.removeIgshid
 import java.util.*
 
 /** Created by luis Mesa on 09/08/22 */
@@ -42,7 +42,6 @@ object APIHelper {
     private fun executeTiktok(context: Context, queryLink: String) {
         // Ejecutar api random del listado de APIs
         val nunApiRandom = Random().nextInt(APITiktok.APIs.values().size)
-        DialogXUtils.ToastX.showSuccess(nunApiRandom.toString())
         val firstApiDefault = APITiktok.APIs.values()[nunApiRandom].toString()
         getTiktokData(context, firstApiDefault, queryLink)
     }
@@ -63,7 +62,7 @@ object APIHelper {
     private fun executeInstagram(context: Context, queryLink: String) {
         // Api con la cual obtener la data
         val firstApiDefault = APIInsta.APIs.Maatootz.toString()
-        getInstagramData(context, firstApiDefault, queryLink)
+        getInstagramData(context, firstApiDefault, removeIgshid(queryLink))
     }
 
     private fun getInstagramData(context: Context, api: String, queryLink: String) {
@@ -80,8 +79,7 @@ object APIHelper {
     private fun executeFacebook(context: Context, queryLink: String) {
         // Api con la cual obtener la data
         val firstApiDefault = APIFacebook.APIs.Vikas.id
-            getFacebookData(context, firstApiDefault, queryLink)
-
+        getFacebookData(context, firstApiDefault, queryLink)
     }
 
     private fun getFacebookData(context: Context, api: String, queryLink: String) {
@@ -93,7 +91,6 @@ object APIHelper {
             APIFacebook.APIs.Vikas.id -> facebookRepository.executeApiVikas(queryLink)
         }
     }
-
     // endregion
 
 }
