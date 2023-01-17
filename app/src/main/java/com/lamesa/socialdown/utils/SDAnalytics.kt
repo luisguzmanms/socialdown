@@ -1,8 +1,12 @@
 package com.lamesa.socialdown.utils
 
+import android.os.Bundle
+import com.amplitude.api.Amplitude
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import com.lamesa.socialdown.app.SDApp.Analytics.firebaseAnalytics
 import com.lamesa.socialdown.app.SDApp.Analytics.mixpanel
+import com.lamesa.socialdown.app.SDApp.Context.tinyDB
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.utils.Constansts.Analytics.ErrorApiData
@@ -11,14 +15,17 @@ import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdClosed
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdError
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdErrorSend
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdOpened
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventAdUserReward
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventError
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventShareApp
+import com.lamesa.socialdown.utils.Constansts.Analytics.EventShareItem
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventViewDialogMessage
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventViewDialogUpdate
 import com.lamesa.socialdown.utils.Constansts.Analytics.EventViewStars
 import com.lamesa.socialdown.utils.Constansts.Analytics.FailureDownload
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDataExtracted
 import com.lamesa.socialdown.utils.Constansts.Analytics.MediaDownloaded
+import com.lamesa.socialdown.utils.Constansts.Analytics.TBDownloads
 import com.mixpanel.android.mpmetrics.MixpanelAPI
 import org.json.JSONObject
 
@@ -107,6 +114,9 @@ class SDAnalytics {
             param("TypeMedia", modelMediaDownloaded.mediaType)
         }
         //endregion
+        // Aumentar contador de descargas en Mixpanel
+        tinyDB.putInt(TBDownloads, tinyDB.getInt(TBDownloads) + 1)
+        mixpanel.people.withIdentity(mixpanel.distinctId).increment("Downloads", 1.0)
     }
 
     fun eventFailureDownload(error: String, modelMediaDownloaded: ModelMediaDownloaded) {
@@ -191,6 +201,25 @@ class SDAnalytics {
     }
     //enregion
 
+    fun eventShareItem() {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Event", EventShareItem)
+        mixpanel.track(EventShareItem, props)
+        //endregion
+        //region Firebase Analytics
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, EventShareItem)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "media")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventShareItem, props)
+        //endregion
+        tinyDB.putInt(EventShareItem, tinyDB.getInt(EventShareItem) + 1)
+        mixpanel.people.withIdentity(mixpanel.distinctId).increment(EventShareItem, 1.0)
+    }
+
     fun eventShareApp() {
         //region Analytics
         val props = JSONObject()
@@ -198,9 +227,10 @@ class SDAnalytics {
         mixpanel.track(EventShareApp, props)
         //endregion
         //region Firebase Analytics
-        firebaseAnalytics.logEvent(EventShareApp) {
-            param("Event", EventShareApp)
-        }
+        val bundle = Bundle()
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, EventShareApp)
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "app")
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SHARE, bundle)
         //endregion
         //region Amplitude Analytics
         Amplitude.getInstance().logEvent(EventShareApp, props)
