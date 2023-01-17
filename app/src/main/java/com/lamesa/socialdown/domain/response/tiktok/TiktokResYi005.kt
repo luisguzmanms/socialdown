@@ -2,7 +2,7 @@ package com.lamesa.socialdown.domain.response.tiktok
 
 import com.google.gson.annotations.SerializedName
 
-/** Created by luis Mesa on 09/08/22 */
+
 data class TiktokResYi005(
     @SerializedName("code") var code: Int? = null,
     @SerializedName("msg") var msg: String? = null,
