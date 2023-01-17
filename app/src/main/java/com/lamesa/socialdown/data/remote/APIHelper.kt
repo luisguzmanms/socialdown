@@ -21,6 +21,13 @@ object APIHelper {
         NONE("none")
     }
 
+    enum class CodeApi(val code: Int, val desc: String) {
+        C_200(200, "success"),
+        C_429(429, "MONTHLY quota for Requests"),
+        C_403(403, "Please try again later.\nLink is roung / private or there is unkown error!!\n"),
+        C_500(500, "Please try again later.\nLink is roung / private or there is unkown error!!\n")
+    }
+
     fun executeApi(context: Context, appApi: AppApi, queryLink: String) {
         when (appApi) {
             AppApi.FACEBOOK -> executeFacebook(context, queryLink)
