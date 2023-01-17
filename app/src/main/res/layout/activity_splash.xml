@@ -9,13 +9,13 @@
         android:id="@+id/iv_fondoSplash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_splash"
+        app:srcCompat="@drawable/background_splash"
         android:scaleType="centerCrop" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/shape_controller_bottom_gradient"
+        app:srcCompat="@drawable/shape_controller_bottom_gradient"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -31,7 +31,7 @@
             android:layout_height="226dp"
             android:contentDescription="TODO"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_transparent" />
+            android:background="@drawable/ic_launcher_transparent" />
 
         <TextView
             android:id="@+id/tvAppName"
@@ -54,7 +54,7 @@
             android:fontFamily="@font/opensans_medium"
             android:gravity="center"
             android:text="Video Downloader"
-            android:textColor="@color/gnt_white"
+            android:textColor="@color/white25"
             android:textSize="14sp"
             android:textStyle="bold"
             android:visibility="gone" />
@@ -68,7 +68,7 @@
             android:fontFamily="@font/opensans_medium"
             android:gravity="center"
             android:text="@string/text_NoWathermark"
-            android:textColor="@color/gnt_white" />
+            android:textColor="@color/white25" />
 
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/spinKitView2"
@@ -81,7 +81,6 @@
 
     </LinearLayout>
 
-
     <TextView
         android:id="@+id/tv_creador"
         android:layout_width="match_parent"
@@ -93,7 +92,7 @@
         android:gravity="center"
         android:paddingBottom="20dp"
         android:text="For you with love :)\nlamesa"
-        android:textColor="@color/gnt_white"
+        android:textColor="@color/white"
         android:textSize="16sp" />
 
 </RelativeLayout>

@@ -14,7 +14,7 @@
         android:pivotX="50%"
         android:pivotY="50%"
         android:toXScale="4"
-        android:toYScale="4"></scale>
+        android:toYScale="4" />
 
     <!-- Rotate 180 degrees -->
     <rotate

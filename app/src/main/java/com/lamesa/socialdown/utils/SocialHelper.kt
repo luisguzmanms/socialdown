@@ -1,14 +1,18 @@
 package com.lamesa.socialdown.utils
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
+import android.webkit.URLUtil
 import com.lamesa.socialdown.R
 import com.lamesa.socialdown.app.SDApp.Context.resources
 import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.downloader.DownloaderHelper
+import com.lamesa.socialdown.utils.Constansts.SHARE_APP_REQUEST_CODE
 import java.util.*
 
 object SocialHelper {
@@ -52,7 +56,7 @@ object SocialHelper {
         ),
     }
 
-    fun isOnline(context: Context): Boolean {
+    internal fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -71,6 +75,7 @@ object SocialHelper {
                 }
             }
         }
+        DialogXUtils.NotificationX.showError(context.getString(R.string.text_NoInternetConnection))
         return false
     }
 
@@ -121,12 +126,14 @@ object SocialHelper {
         if (url.contains("/tv/")) return MediaType.IGTV
         else if (url.contains("/reel/")) return MediaType.REEL
         else if (url.contains("/s/")) return MediaType.STORY
+        else if (url.contains("/stories/")) return MediaType.STORY
         else if (url.contains("/p/")) return MediaType.POST
         else if (
             url.contains("/watch") ||
             url.contains("tiktok.com") ||
             url.contains("/fb.watch/") ||
-            url.contains("/video/")
+            url.contains("/video/") ||
+            url.contains("/videos/")
         )
             return MediaType.VIDEO
 
@@ -136,7 +143,7 @@ object SocialHelper {
     /**
      * Algunos enlaces de instagram contienes una cadena de texto "?igshid" que provoa error en la APi
      */
-    fun removeIgshid(url: String): String {
+    internal fun removeIgshid(url: String): String {
         // Separa la cadena por el carácter "?" y toma la primera parte de la lista resultante
         val parts = url.split("?")
         return parts[0]
@@ -163,4 +170,42 @@ object SocialHelper {
         return strings[Random().nextInt(strings.size)].trim()
     }
 
+    internal fun searchByLink(context: Context, queryLink: String) {
+        if (isOnline(context)) {
+            if (URLUtil.isNetworkUrl(queryLink)) {
+                when (checkAppTypeUrl(queryLink)) {
+                    APIHelper.AppApi.TIKTOK -> APIHelper.executeApi(
+                        context,
+                        APIHelper.AppApi.TIKTOK, queryLink
+                    )
+                    APIHelper.AppApi.INSTAGRAM -> APIHelper.executeApi(
+                        context,
+                        APIHelper.AppApi.INSTAGRAM, queryLink
+                    )
+                    APIHelper.AppApi.FACEBOOK -> APIHelper.executeApi(
+                        context,
+                        APIHelper.AppApi.FACEBOOK, queryLink
+                    )
+                    else -> DialogXUtils.NotificationX.showError(context.getString(R.string.text_linkNoSupported) + " : " + queryLink)
+                }
+            } else {
+                DialogXUtils.NotificationX.showError(context.getString(R.string.text_linkNotValid) + " : $queryLink")
+                SDAd().showInterAd(context)
+            }
+        } else {
+            DialogXUtils.NotificationX.showError(context.getString(R.string.text_NoInternetConnection))
+        }
+    }
+
+    fun shareApp(context: Activity) {
+        val incentive = context.getString(R.string.text_shareApp)
+        val downloadLink = "https://rebrand.ly/shareSocialDown"
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "$incentive\n$downloadLink")
+        context.startActivityForResult(
+            Intent.createChooser(shareIntent, "Share SocialDown"),
+            SHARE_APP_REQUEST_CODE
+        )
+    }
 }

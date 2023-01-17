@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="11">
+      <module name="socialdown.DialogX" target="11" />
+      <module name="socialdown.DialogXIOSStyle" target="11" />
+      <module name="socialdown.DialogXKongzueStyle" target="11" />
+      <module name="socialdown.DialogXMaterialYou" target="11" />
+      <module name="socialdown.DialogXMIUIStyle" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

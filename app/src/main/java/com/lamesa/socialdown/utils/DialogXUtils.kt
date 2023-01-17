@@ -27,7 +27,6 @@ import com.lamesa.socialdown.utils.SocialHelper.shareApp
 import com.lamesa.socialdown.view.main.MainActivity
 import net.khirr.android.privacypolicy.PrivacyPolicyDialog
 
-
 class DialogXUtils : DialogX() {
 
     object NotificationX {
@@ -543,7 +542,7 @@ class DialogXUtils : DialogX() {
         val textInfo = TextInfo()
         textInfo.gravity = Gravity.CENTER
         for (i in 10..100 step 10) {
-            if (tinyDB.getInt(TBDownloads) == 0) {
+            if (tinyDB.getInt(TBDownloads) == i) {
                 MessageDialog.show(
                     i.toString() + " " + context.getString(R.string.text_Downloads) + "! " + "\uD83E\uDD73 \uD83C\uDF89",
                     context.getString(R.string.msd_congratulations),
@@ -552,10 +551,12 @@ class DialogXUtils : DialogX() {
                 ).setTitleTextInfo(textInfo).setMessageTextInfo(textInfo).setCancelable(false)
                     .setOkButton(
                     ) { baseDialog, v ->
+                        baseDialog.dismiss()
                         SDAnalytics().eventViewStars()
                         ToastX.showSuccess("Thanks! ❤")
                         val packageName = "com.lamesa.socialdown"
-                        val appStoreLink = "market://details?id=$packageName"
+                        val appStoreLink =
+                            "https://play.google.com/store/apps/details?id=$packageName"
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(appStoreLink))
                         context.startActivity(intent)
                         false

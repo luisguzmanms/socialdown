@@ -80,7 +80,7 @@
                     android:gravity="center"
                     android:textColor="#A5A5A5"
                     android:fontFamily="@font/opensans_semibold"
-                    android:text="0/0"></TextView>
+                    android:text="0/0" />
             </LinearLayout>
         </LinearLayout>
 

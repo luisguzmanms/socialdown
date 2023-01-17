@@ -7,10 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".view.main.MainActivity">
 
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scrollbars="none"
         android:visibility="visible">
 
@@ -19,58 +18,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/ic_right_arrow"
-                        android:visibility="visible" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_weight="1"
-                        android:text="32 files"
-                        android:textColor="#313943"
-                        android:visibility="visible" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:fontFamily="@font/opensans_bold"
-                        android:gravity="center"
-                        android:text="Downloads"
-                        android:textColor="#313943"
-                        android:textSize="25sp">
-
-
-                    </TextView>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
             <com.tistory.zladnrms.roundablelayout.RoundableLayout
                 android:id="@+id/main"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/gradiant_main"
                 android:elevation="5dp"
+
                 android:translationZ="5dp"
                 app:cornerLeftBottom="40dp"
                 app:cornerLeftSide="0dp"
@@ -84,36 +38,46 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/gradiant_main"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="-62dp">
+                    android:gravity="center"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="40dp"
+                    android:paddingEnd="30dp"
+                    android:paddingStart="30dp">
 
                     <LinearLayout
-                        android:layout_width="352dp"
-                        android:layout_height="198dp"
-                        android:layout_above="@+id/svLinearLayout"
-                        android:layout_below="@+id/tv_textTop"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <Space
-                            android:layout_width="match_parent"
-                            android:layout_height="20dp" />
-
-                        <TextView
-                            android:id="@+id/tv_Welcome"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/opensans_light"
-                            android:text="Welcome to,"
-                            android:textColor="@color/design_default_color_background"
-                            android:textSize="20sp"
-                            app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:gravity="center|bottom"
+                            android:orientation="horizontal">
 
-                        <TextView
+                            <com.hanks.htextview.fade.FadeTextView
+                                android:id="@+id/tv_Welcome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/opensans_light"
+                                android:text="Welcome to,"
+                                android:textColor="@color/design_default_color_background"
+                                android:textSize="20sp"
+                                app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/iv_menu"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginRight="13dp"
+                                android:src="@drawable/ic_menu" />
+
+                        </LinearLayout>
+
+                        <com.hanks.htextview.fade.FadeTextView
                             android:id="@+id/tv_titleDownloader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -121,57 +85,29 @@
                             android:text="SocialDown"
                             android:textColor="@color/design_default_color_background"
                             android:textSize="34sp"
+                            app:animationDuration="1000"
                             app:layout_constraintStart_toStartOf="@+id/linearLayout"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                        <TextView
+                        <com.hanks.htextview.scale.ScaleTextView
                             android:id="@+id/tv_subTitleDownloader"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
                             android:fontFamily="@font/opensans_medium"
                             android:text="Images - Reels - Stories - Videos"
                             android:textColor="@color/design_default_color_background"
                             android:textSize="14sp"
                             app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/svLinearLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_above="@+id/ly_apps"
-                        android:layout_marginBottom="21dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="visible"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        tools:layout_editor_absoluteX="0dp">
-
-
                         <LinearLayout
-                            android:layout_width="333dp"
-                            android:layout_height="52dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
                             android:background="@drawable/ic_search"
                             android:gravity="center"
                             android:orientation="horizontal"
                             android:padding="5dp">
-
-                            <EditText
-                                android:id="@+id/et_link"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentBottom="true"
-                                android:layout_weight="1"
-                                android:background="@null"
-                                android:ems="8"
-                                android:fontFamily="@font/opensans_light"
-                                android:hint="Paste post link here..."
-                                android:inputType="textPersonName"
-                                android:textColor="#A9DADADA"
-                                android:textColorHint="#C3E4E3E3"
-                                android:textSize="14sp"
-                                app:boxBackgroundMode="none" />
 
                             <ImageView
                                 android:id="@+id/imageView"
@@ -180,13 +116,31 @@
                                 android:layout_margin="5dp"
                                 android:src="@drawable/ic_link" />
 
+                            <EditText
+                                android:id="@+id/et_link"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_alignParentBottom="true"
+                                android:layout_weight="1"
+                                android:autofillHints=""
+                                android:background="@null"
+                                android:ems="8"
+                                android:fontFamily="@font/opensans_light"
+                                android:hint="@string/text_PasteLink"
+                                android:inputType="textPersonName"
+                                android:minHeight="48dp"
+                                android:textColor="#A9DADADA"
+                                android:textColorHint="#C3E4E3E3"
+                                android:textSize="14sp"
+                                app:boxBackgroundMode="none" />
+
                             <ImageView
                                 android:id="@+id/iv_clean"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
                                 android:layout_marginLeft="2dp"
                                 android:layout_marginRight="2dp"
-                                android:src="@drawable/ic_clean2"
+                                android:src="@drawable/ic_clean"
                                 android:visibility="gone" />
 
                             <ImageView
@@ -194,96 +148,208 @@
                                 android:layout_width="45dp"
                                 android:layout_height="45dp"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="5dp"
                                 android:src="@drawable/ic_download"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/svLinearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="0dp"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="visible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:layout_editor_absoluteX="0dp">
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:id="@+id/ly_apps"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            tools:layout_editor_absoluteX="0dp">
 
+                            <ImageView
+                                android:id="@+id/iv_facebook"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:src="@drawable/ic_facebook_off"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/iv_tiktok"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:src="@drawable/ic_tiktok_off"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <ImageView
+                                android:id="@+id/iv_instagram"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="5dp"
+                                android:src="@drawable/ic_instagram_off"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ly_apps"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="21dp"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        tools:layout_editor_absoluteX="0dp">
-
-
-                        <ImageView
-                            android:id="@+id/iv_facebook"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:src="@drawable/ic_facebook_off"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/iv_tiktok"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:src="@drawable/ic_tiktok_off"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <ImageView
-                            android:id="@+id/iv_instagram"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="5dp"
-                            android:src="@drawable/ic_instagram_off"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tv_textTop"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center"
-                        android:text="..."
-                        android:textColor="@color/design_default_color_background" />
-
-                    <androidx.appcompat.widget.SearchView
-                        android:id="@+id/sv_get_media"
-                        android:layout_width="365dp"
-                        android:layout_height="52dp"
-                        android:visibility="gone"
-                        tools:layout_editor_absoluteX="23dp"
-                        tools:layout_editor_absoluteY="45dp">
-
-                    </androidx.appcompat.widget.SearchView>
                 </RelativeLayout>
-
 
             </com.tistory.zladnrms.roundablelayout.RoundableLayout>
 
+            <LinearLayout
+                android:id="@+id/content_download"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/ic_right_arrow"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="center"
+                        android:text="@string/text_Downloads"
+                        android:textSize="25sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/tv_downloadCount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:text="0 files"
+                        android:textColor="#313943"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/content_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="center"
+                        android:text="Delete:"
+                        android:textSize="25sp"></TextView>
+
+                    <TextView
+                        android:id="@+id/tv_countDelete"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1"
+                        android:text="0 files"
+                        android:textColor="#313943"
+                        android:visibility="visible" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="15dp"
+                        android:src="@drawable/ic_close"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_media_downloaded"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <LinearLayout
+                android:id="@+id/cn_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|fill_vertical"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="95dp"
+                    android:layout_height="89dp"
+                    app:srcCompat="@drawable/ic_empty" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_medium"
+                    android:gravity="center"
+                    android:text="@string/text_Empty"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
         </LinearLayout>
+
     </ScrollView>
 
+    <!-- ca-app-pub-1553194436365145/6110777508  -->
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adMainBanner"
+        android:layout_gravity="bottom|center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="SMART_BANNER"
+        ads:adUnitId="ca-app-pub-1553194436365145/6110777508"></com.google.android.gms.ads.AdView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

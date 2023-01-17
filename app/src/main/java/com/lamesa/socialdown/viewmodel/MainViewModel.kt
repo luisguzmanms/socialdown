@@ -3,9 +3,8 @@ package com.lamesa.socialdown.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import com.lamesa.socialdown.app.SDApp.Context.roomDatabase
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
+import com.lamesa.socialdown.usecase.GetAllMediaByAppUseCase
 import com.lamesa.socialdown.usecase.GetAllMediaUseCase
 
 class MainViewModel : ViewModel() {
@@ -20,12 +19,8 @@ class MainViewModel : ViewModel() {
     }
 
     internal fun getMediaByApp(app: String): LiveData<List<ModelMediaDownloaded>> {
-        lstDataDBByApp = roomDatabase.mediaDAO().getAllMediaByApp(app).asLiveData()
+        lstDataDBByApp = GetAllMediaByAppUseCase().invoke(app)
         return lstDataDBByApp
-    }
-
-    fun lstDataDB(): LiveData<List<ModelMediaDownloaded>> {
-        return lstMediaDownloadedDB
     }
 
 }

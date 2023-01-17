@@ -218,19 +218,20 @@ class DownloaderHelper(private val context: Context) {
                     btnDownloadLock!!.visibility = View.VISIBLE
                     btnDownloadLock.setOnClickListener {
                         if (viewPagerAdapter.getlistToDownload().isNotEmpty()) {
-                            for (linkToDownload in viewPagerAdapter.getlistToDownload()) {
-                                SDAd().showAdToDodwnload(context, dialog)
-                                // si se cierra el dialogo desde onAdDismissedFullScreenContent, se iniciara la descarga
-                                dialog!!.dialogLifecycleCallback =
-                                    object : DialogLifecycleCallback<BottomDialog?>() {
-                                        override fun onDismiss(dialog: BottomDialog?) {
+                            SDAd().showAdToDodwnload(context, dialog)
+                            // si se cierra el dialogo desde onAdDismissedFullScreenContent, se iniciara la descarga
+                            dialog!!.dialogLifecycleCallback =
+                                object : DialogLifecycleCallback<BottomDialog?>() {
+                                    override fun onDismiss(dialog: BottomDialog?) {
+                                        // descargar cada elemento
+                                        for (linkToDownload in viewPagerAdapter.getlistToDownload()) {
                                             MediaDownloader(context).downloadMedia(
                                                 linkToDownload,
                                                 dataExtracted
                                             )
                                         }
                                     }
-                            }
+                                }
                             println("btnDownload:: {${viewPagerAdapter.getlistToDownload()}}")
                         } else {
                             ToastX.showWarning(context.getString(R.string.text_selectToDownload))

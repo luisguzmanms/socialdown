@@ -24,7 +24,6 @@ interface MediaDAO {
     suspend fun insertMedia(mediaDownloaded: ModelMediaDownloaded)
 
     @Delete
-    suspend fun delete(mediaDownloaded: ModelMediaDownloaded)
-
+    suspend fun deleteMedia(mediaDownloaded: ModelMediaDownloaded)
 
 }

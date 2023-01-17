@@ -22,5 +22,4 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideMediaDao(db: MediaDB) = db.mediaDAO()
-
 }

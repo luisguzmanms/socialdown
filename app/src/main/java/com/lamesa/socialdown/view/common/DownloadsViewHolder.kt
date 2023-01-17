@@ -1,11 +1,10 @@
 package com.lamesa.socialdown.view.common
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.media.ThumbnailUtils
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import android.view.View
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -21,14 +20,13 @@ import com.lamesa.socialdown.R.*
 import com.lamesa.socialdown.data.remote.APIHelper.AppApi.*
 import com.lamesa.socialdown.databinding.ItemMediaDownloadedBinding
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
-import com.lamesa.socialdown.downloader.DownloaderHelper
 import com.lamesa.socialdown.usecase.DeleteMediaUseCase
+import com.lamesa.socialdown.utils.Constansts.SHARE_ITEM_REQUEST_CODE
 import com.lamesa.socialdown.utils.DialogXUtils
 import com.lamesa.socialdown.utils.SDAnimation
 import com.lamesa.socialdown.utils.SocialHelper.AppDownloader
 import com.lamesa.socialdown.utils.SocialHelper.MediaType.*
 import com.lamesa.socialdown.utils.SocialHelper.MediaType.NONE
-import com.lamesa.socialdown.utils.SocialHelper.checkExtensionFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -66,23 +64,13 @@ class DownloadsViewHolder(private val context: Context, view: View) :
             else -> binding.ivTypeApp.setImageResource(NONE.icon)
         }
 
-        if (File(media.filePatch).exists()) {
-            if (checkExtensionFile(media.filePatch) == DownloaderHelper.ExtensionFile.MP4) {
-                val bMap = ThumbnailUtils.createVideoThumbnail(
-                    media.filePatch,
-                    MediaStore.Video.Thumbnails.MINI_KIND
-                )
-                binding.ivMedia.setImageBitmap(bMap)
-            } else {
-                Glide.with(context)
-                    .asBitmap()
-                    .load(Uri.fromFile(File(media.filePatch)))
-                    .placeholder(drawable.ic_download)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
-                    .into(binding.ivMedia)
-            }
-        }
+        Glide.with(context)
+            .asBitmap()
+            .load(Uri.fromFile(File(media.filePatch)))
+            .placeholder(drawable.ic_download)
+            .centerCrop()
+            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+            .into(binding.ivMedia)
 
         SDAnimation(context).setSDAnimation(
             binding.content,
@@ -109,7 +97,7 @@ class DownloadsViewHolder(private val context: Context, view: View) :
                 File(media.filePatch)
             )
         } else {
-            Uri.fromFile(File(media.filePatch));
+            Uri.fromFile(File(media.filePatch))
         }
 
         if (File(media.filePatch).exists() && uri != null) {
@@ -117,7 +105,7 @@ class DownloadsViewHolder(private val context: Context, view: View) :
             if (media.filePatch.contains(".mp4")) mimeType = "video/mp4"
 
             if (mimeType.isNotEmpty()) {
-                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                intent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 intent.setDataAndType(uri, mimeType)
                 context.startActivity(intent)
             }
@@ -138,7 +126,7 @@ class DownloadsViewHolder(private val context: Context, view: View) :
                 override fun getIcon(dialog: BottomMenu?, index: Int, menuText: String?): Int {
                     when (menuText) {
                         context.getString(string.option_open) -> return drawable.ic_open
-                        context.getString(string.option_share) -> return drawable.ic_send
+                        context.getString(string.option_share) -> return drawable.ic_new_post
                         context.getString(string.option_delete) -> return drawable.ic_delete
                     }
                     dialog!!.hide()
@@ -178,6 +166,7 @@ class DownloadsViewHolder(private val context: Context, view: View) :
     }
 
     private fun shareItem(media: ModelMediaDownloaded) {
+        val activity = context as Activity
         var mimeType = ""
         val uri: Uri? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             FileProvider.getUriForFile(
@@ -186,7 +175,7 @@ class DownloadsViewHolder(private val context: Context, view: View) :
                 File(media.filePatch)
             )
         } else {
-            Uri.fromFile(File(media.filePatch));
+            Uri.fromFile(File(media.filePatch))
         }
 
         if (File(media.filePatch).exists() && uri != null) {
@@ -197,11 +186,11 @@ class DownloadsViewHolder(private val context: Context, view: View) :
                 share.action = Intent.ACTION_SEND
                 share.type = mimeType
                 share.putExtra(Intent.EXTRA_STREAM, uri)
-                context.startActivity(
+                activity.startActivityForResult(
                     Intent.createChooser(
                         share,
                         context.getString(string.text_shareFile)
-                    )
+                    ), SHARE_ITEM_REQUEST_CODE
                 )
             }
         } else {

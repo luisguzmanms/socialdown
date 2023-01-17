@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 7.2.1" type="baseline" client="gradle" dependencies="false"
+    name="AGP (7.2.1)" variant="fatal" version="7.2.1">
+
+    <issue id="ExtraTranslation"
+        message="&quot;desc_facebook&quot; is translated here but not found in default locale"
+        errorLine1="    &lt;string name=&quot;desc_facebook&quot; translatable=&quot;false&quot;>Reels - Videos&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values-night/strings.xml" line="3" column="13" />
+    </issue>
+
+    <issue id="ExtraTranslation"
+        message="&quot;desc_instagram&quot; is translated here but not found in default locale"
+        errorLine1="    &lt;string name=&quot;desc_instagram&quot; translatable=&quot;false&quot;>Images - Reels - Stories - Videos&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values-night/strings.xml" line="4" column="13" />
+    </issue>
+
+    <issue id="ExtraTranslation"
+        message="&quot;text_tiktokDownloader&quot; is translated here but not found in default locale"
+        errorLine1="    &lt;string name=&quot;text_tiktokDownloader&quot; translatable=&quot;false&quot;>Tiktok Downloader&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values-night/strings.xml" line="5" column="13" />
+    </issue>
+
+    <issue id="ExtraTranslation"
+        message="&quot;text_errorCode703&quot; is translated here but not found in default locale"
+        errorLine1="    &lt;string name=&quot;text_errorCode703&quot; translatable=&quot;false&quot;>Error code: 703&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location file="src/main/res/values-night/strings.xml" line="10" column="13" />
+    </issue>
+
+</issues>
