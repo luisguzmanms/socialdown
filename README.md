@@ -1,7 +1,6 @@
-
 <p align="center">
   <a href="https://rebrand.ly/toluguweb">
-    <img alt="SocialDown - Video Downloader" title="SocialDown - Video Downloader" src="https://firebasestorage.googleapis.com/v0/b/socialdown-app.appspot.com/o/res%2Fscreen_es%2FSocialDown%20Banner%201024-500_es.gif?alt=media&token=ee60df61-138b-49fe-920c-02351b044309" width="1024">
+    <img alt="SocialDown - Video Downloader" title="SocialDown - Video Downloader" src="https://rebrand.ly/ghhsocialdown" width="1024">
   </a>
 </p>
 
@@ -9,16 +8,16 @@
 SIN MARCA DE AGUA</h4>
 
 <p align="center">
-  <a href="">
+  <a href="https://rebrand.ly/socialdown-playstore">
     <img alt="Get it on Google Play" title="Play Store" src="https://firebasestorage.googleapis.com/v0/b/socialdown-app.appspot.com/o/res%2Ficons%2Fplaystore.png?alt=media&token=6716d2f2-a28e-4bb0-9c52-a2b21c1ec831" width="140">
   </a>
- <a href="">
+ <a href="https://rebrand.ly/socialdown-uptodown">
     <img alt="Download on the Uptodown Store" title="Uptodown Store" src="https://firebasestorage.googleapis.com/v0/b/socialdown-app.appspot.com/o/res%2Ficons%2Fuptodown.png?alt=media&token=279b9469-97a8-4e33-99f0-e00c3d912b72" width="140">
   </a>
  
 </p>
 <p align="center">
- <a href="">
+ <a href="https://rebrand.ly/socialdown-web">
     <img alt="website" title="App web" src="https://firebasestorage.googleapis.com/v0/b/itcloudme.appspot.com/o/recursos%2Fdise%C3%B1o%2Fapp%2Ficon%2Fbanner%2Fwebsite.png?alt=media&token=13207e5f-1e31-486b-a494-4dc4797a086d" width="140">
   </a>
  <a href="https://mixpanel.com/p/JoDAgwdhVCV5bNQVVEb6Gu?embed=true&passcode=8!X-!kvrl%22">
@@ -27,13 +26,13 @@ SIN MARCA DE AGUA</h4>
 </p>
 
  <p align="center">
-    <a href="#SocialDown">SocialDown</a>
+    <a href=#socialdown>SocialDown</a>
     ·
-    <a href="#Features">Features</a>
+    <a href=#features>Features</a>
     ·
-    <a href="#Built-With">Built With</a>
+    <a href=#built-with->Built With</a>
      ·
-    <a href="#API-Rest">API Rest</a>
+    <a href=#api-rest->API Rest</a>
     <br />
   </p>
 
@@ -46,10 +45,10 @@ SIN MARCA DE AGUA</h4>
 ## Table of Contents
 <p align="center">
 
-- [SocialDown](#SocialDown)
-- [Features](#Features)
-- [Built With](#Built-With)
-- [API Rest](#API-Rest)
+- [SocialDown](#socialdown)
+- [Features](#features)
+- [Built With](#built-with-)
+- [API Rest](#api-rest-)
 
 </p>
 -->
@@ -57,7 +56,8 @@ SIN MARCA DE AGUA</h4>
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## SocialDown 
-![Current Version](https://img.shields.io/badge/version-1.0-green.svg)
+![Current Version](https://img.shields.io/badge/version-1.2.3-green.svg)
+_Primer lanzamiento (v1.0) a GooglePlay el 28 de diciembre de 2022._
 
 <p>
 <img src="https://firebasestorage.googleapis.com/v0/b/socialdown-app.appspot.com/o/res%2Fscreen_es%2Fscreen2.png?alt=media&token=4eb38f1f-2c1b-43ca-94a8-b4e049c05f8d" align="right"
@@ -104,6 +104,7 @@ Algunas de las funciones que puedes hacer en **SocialDown**
 - [Material Design](https://www.material.io/) - Estilo de diseño de Google. 
 - [Mixpanel](https://mixpanel.com/es/) - Rastreo de eventos personalizados.
 - [Retrofit2](https://github.com/square/retrofit) - Permite hacer peticiones al servidor y gestionar diferentes tipos de parámetros.
+- [Dagger hilt](https://developer.android.com/training/dependency-injection/hilt-android) - Injección de dependencias (*en proceso..*)
 
  
 ## API Rest ✅
