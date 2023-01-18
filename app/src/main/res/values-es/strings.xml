@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="option_open">Abrir</string>
+    <string name="option_share">Publicar - Compartir</string>
+    <string name="option_delete">Eliminar</string>
+    <string name="error_openFile">Error al abrir el archivo./nNo existe en el dispositivo.</string>
+    <string name="desc_tiktok">Videos sin marca de agua.</string>
+    <string name="dialog_deleteItem">¿Desea eliminar este elemento?</string>
+    <string name="text_delete">ELIMINAR</string>
+    <string name="text_itemDelete">Elemento eliminado.</string>
+    <string name="text_successfulDownload">Descarga completa.</string>
+    <string name="text_selectToDownload">Selecciona los elementos a descargar.</string>
+    <string name="error_getDataApi">Error al obtener los datos. Intente nuevamente.</string>
+    <string name="text_downloading">Descargando…</string>
+    <string name="text_progress">Progreso</string>
+    <string name="text_linkNoSupported">Link no compatible.</string>
+    <string name="text_linkNotValid">Link no valido.</string>
+    <string name="text_NoInternetConnection">Sin conexión a internet.</string>
+    <string name="text_retryDownload">Reintentando descarga…</string>
+    <string name="text_shareFile">Compartir archivo.</string>
+    <string name="text_thereWasAError">Ha habido un error.</string>
+    <string name="error_linkPrivate">Enlace incorrecto o vídeo no encontrado / es privado.</string>
+    <string name="text_LoadData">Obteniendo información…</string>
+    <string name="text_DecPostSilder">Descarga tus publicaciones favoritas.</string>
+    <string name="text_StarDownload">Iniciando descarga.</string>
+    <string name="text_NoWathermark">videos sin marca de agua.</string>
+    <string name="text_Feedback">Sugerencias</string>
+    <string name="text_ReportBurg">Reportar error</string>
+    <string name="text_ProvacyPolicy">Politicas de privacidad</string>
+    <string name="text_PasteLink">Pega el enlace del post aquí…</string>
+    <string name="text_Downloads">Downloads</string>
+    <string name="text_errorCode703">Error code : 703</string>
+    <string name="text_tiktokDownloader">Tiktok Downloader</string>
+    <string name="desc_facebook">Reels - Videos</string>
+    <string name="desc_instagram">Images - Reels - Stories - Videos</string>
+    <string name="text_Empty">Vacío.</string>
+    <string name="error_empty">Campo vacío, para mas información abra la opción \'How use?\' en el menu.</string>
+    <string name="loading">Cargando…</string>
+    <string name="title_permissions">¡Permiso necesario!</string>
+    <string name="msg_permissions">Necesitamos el permiso para escribir en almacenamiento externo para poder guardar las descargas realizadas.</string>
+    <string name="text_updateApp">¡Actualización disponible!</string>
+    <string name="msg_updateApp">Se encuentra disponible una actualización que mejora algunas funciones y soluciona pequeños errores optimizando el rendimiento de la aplicación.</string>
+    <string name="update">ACTUALIZAR</string>
+    <string name="text_shareApp">Get free access to all premium features of SocialDown, an app that lets you download videos from Instagram, Facebook, and TikTok without watermarks!</string>
+    <string name="text_share">Compartir app</string>
+    <string name="text_download">Descargar</string>
+    <string name="msd_congratulations">Enhorabuena, esperamos que estés disfrutando de la aplicación.\n\n¿Aún no has valorado SocialDown en la App Store?\n\nTus comentarios son valiosos para nosotros y nos ayudan a seguir mejorando.\n\n¡Gracias por usar SocialDown!</string>
+    />
+</resources>

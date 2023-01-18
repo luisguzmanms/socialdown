@@ -7,10 +7,15 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/htextview-base" />
+            <option value="$PROJECT_DIR$/htextview-fade" />
+            <option value="$PROJECT_DIR$/htextview-scale" />
+            <option value="$PROJECT_DIR$/nativetemplates" />
           </set>
         </option>
       </GradleProjectSettings>

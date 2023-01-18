@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1053707280280",
+    "firebase_url": "https://socialdown-app-default-rtdb.firebaseio.com",
+    "project_id": "socialdown-app",
+    "storage_bucket": "socialdown-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053707280280:android:80a1b96c30a51f8345d5ed",
+        "android_client_info": {
+          "package_name": "com.lamesa.socialdown"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053707280280-5s065m8otko5ds5edjqqa0dvpkgh69t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBE27IeKRuAE9Z7oR4XjTaWesOiyGOapTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053707280280-5s065m8otko5ds5edjqqa0dvpkgh69t9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -7,4 +7,22 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent_grey">#1EC8C7C7</color>
+    <color name="dialog_dark">#1C1C1C</color>
+    <color name="grey">#5C5C5C</color>
+    <color name="btn_grey">#31C8C7C7</color>
+    <color name="blue_main">#2c6ae6</color>
+    <color name="blue_main_variant">#2152CD</color>
+    <color name="blue_secundary">#75b5f4</color>
+    <color name="blue_secundary_variant">#75D0F4</color>
+    <color name="facebook_main">#103783</color>
+    <color name="facebook_main_variant">#23468A</color>
+    <color name="facebook_secundary">#425E95</color>
+    <color name="instagram_main">#ea5753</color>
+    <color name="instagram_main_variant">#ff5282</color>
+    <color name="instagram_secundary">#F48582</color>
+    <color name="tiktok_main">#08203e</color>
+    <color name="tiktok_main_variant">#211f2f</color>
+    <color name="tiktok_secundary">#3B384C</color>
+
 </resources>
