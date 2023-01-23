@@ -85,6 +85,11 @@ Algunas de las funciones que puedes hacer en **SocialDown**
 - Elegir entre resolución **HD** Y **FHD**
 
 
+<p>
+<img src="https://firebasestorage.googleapis.com/v0/b/socialdown-app.appspot.com/o/ezgif-1-f4278e63f9.gif?alt=media&token=1ba63dbb-e504-4e06-97e3-b03d568eb628" align="right"
+     alt="lofiradio" width="320" height="686">
+	 </p>
+
 ## Built With 🛠
 
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture) - Permite la creación de una app robusta y escalable
