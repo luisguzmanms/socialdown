@@ -20,7 +20,7 @@ SIN MARCA DE AGUA</h4>
  <a href="https://rebrand.ly/socialdown-web">
     <img alt="website" title="App web" src="https://firebasestorage.googleapis.com/v0/b/itcloudme.appspot.com/o/recursos%2Fdise%C3%B1o%2Fapp%2Ficon%2Fbanner%2Fwebsite.png?alt=media&token=13207e5f-1e31-486b-a494-4dc4797a086d" width="140">
   </a>
- <a href="https://mixpanel.com/p/JoDAgwdhVCV5bNQVVEb6Gu?embed=true&passcode=8!X-!kvrl%22">
+ <a href="https://rebrand.ly/gitsocialmix">
     <img alt="mixpanel" title="Mixpanel" src="https://firebasestorage.googleapis.com/v0/b/itcloudme.appspot.com/o/recursos%2Fdise%C3%B1o%2Fapp%2Ficon%2Fbanner%2Fmixpanel.png?alt=media&token=562b91dc-5e81-4d91-ac78-f719b03ec55c" width="140">
   </a>
 </p>
