@@ -1,6 +1,7 @@
+
 <p align="center">
-  <a href="https://rebrand.ly/toluguweb">
-    <img alt="SocialDown - Video Downloader" title="SocialDown - Video Downloader" src="https://rebrand.ly/ghhsocialdown" width="1024">
+  <a href="https://rebrand.ly/socialdown-web">
+    <img alt="SocialDown - Video Downloader" title="SocialDown - Video Downloader" src="https://rebrand.ly/ghhsocialdown" width="1000">
   </a>
 </p>
 
