@@ -1,7 +1,6 @@
 package com.lamesa.socialdown.domain.repository
 
 import androidx.appcompat.app.AppCompatActivity
-import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.data.remote.APIHelper.AppApi
 import com.lamesa.socialdown.data.remote.RetrofitHelper
 import com.lamesa.socialdown.data.remote.api.APIInsta
@@ -17,9 +16,9 @@ import com.lamesa.socialdown.utils.DialogXUtils.ToastX
 import com.lamesa.socialdown.utils.SDAd
 import com.lamesa.socialdown.utils.SDAnalytics
 import com.lamesa.socialdown.utils.SocialHelper
+import com.lamesa.socialdown.utils.SocialHelper.checkCodeResponse
 import com.lamesa.socialdown.utils.SocialHelper.chooseRandomString
 import com.lamesa.socialdown.utils.SocialHelper.isOnline
-import com.lamesa.socialdown.utils.SocialHelper.searchByLink
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -106,18 +105,8 @@ class InstagramRepository(private val context: AppCompatActivity) {
                             dataExtracted.raw = call.raw().toString()
                             dataExtracted.key = dataKey
 
-                            when (dataExtracted.codeResponse) {
-                                APIHelper.CodeApi.C_500.code.toString() -> showError(APIHelper.CodeApi.C_500.desc + " : $queryLink").showLong()
-                                APIHelper.CodeApi.C_403.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                APIHelper.CodeApi.C_429.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                else -> ToastX.showWarning("Error code: ${dataExtracted.codeResponse}")
-                            }
+                            // detectar tipo de error e intentar nuevamente hasta 3 veces
+                            checkCodeResponse(context, dataExtracted)
 
                             SDAnalytics().eventErrorApiData(dataExtracted)
                             SDAd().showInterAd(context)

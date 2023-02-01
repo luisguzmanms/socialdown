@@ -16,10 +16,10 @@ import com.lamesa.socialdown.utils.DialogXUtils.NotificationX.showError
 import com.lamesa.socialdown.utils.DialogXUtils.ToastX
 import com.lamesa.socialdown.utils.SDAd
 import com.lamesa.socialdown.utils.SDAnalytics
+import com.lamesa.socialdown.utils.SocialHelper.checkCodeResponse
 import com.lamesa.socialdown.utils.SocialHelper.checkTypeMedia
 import com.lamesa.socialdown.utils.SocialHelper.chooseRandomString
 import com.lamesa.socialdown.utils.SocialHelper.isOnline
-import com.lamesa.socialdown.utils.SocialHelper.searchByLink
 import com.orhanobut.logger.Logger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -106,19 +106,10 @@ constructor(
                             dataExtracted.codeResponse = call.code().toString()
                             dataExtracted.key = dataKey
 
+                            // detectar tipo de error e intentar nuevamente hasta 3 veces
+                            checkCodeResponse(context, dataExtracted)
+
                             SDAnalytics().eventErrorApiData(dataExtracted)
-                            when (dataExtracted.codeResponse) {
-                                APIHelper.CodeApi.C_500.code.toString() -> showError(APIHelper.CodeApi.C_500.desc + " : $queryLink")
-                                APIHelper.CodeApi.C_403.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                APIHelper.CodeApi.C_429.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                else -> ToastX.showWarning("Error code: ${dataExtracted.codeResponse}")
-                            }
                             SDAd().showInterAd(context)
                         }
                     }
@@ -185,20 +176,11 @@ constructor(
                             dataExtracted.raw = call.raw().toString()
                             dataExtracted.key = dataKey
 
+                            // detectar tipo de error e intentar nuevamente hasta 3 veces
+                            checkCodeResponse(context, dataExtracted)
+
                             /** Se envia datos de error a Analytics */
                             SDAnalytics().eventErrorApiData(dataExtracted)
-                            when (dataExtracted.codeResponse) {
-                                APIHelper.CodeApi.C_500.code.toString() -> showError(APIHelper.CodeApi.C_500.desc + " : $queryLink")
-                                APIHelper.CodeApi.C_403.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                APIHelper.CodeApi.C_429.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                else -> ToastX.showWarning("Error code: ${dataExtracted.codeResponse}")
-                            }
                             SDAd().showInterAd(context)
                         }
                     }
@@ -265,18 +247,8 @@ constructor(
                             dataExtracted.raw = call.raw().toString()
                             dataExtracted.key = dataKey
 
-                            when (dataExtracted.codeResponse) {
-                                APIHelper.CodeApi.C_500.code.toString() -> showError(APIHelper.CodeApi.C_500.desc + " : $queryLink")
-                                APIHelper.CodeApi.C_403.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                APIHelper.CodeApi.C_429.code.toString() -> searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                else -> ToastX.showWarning("Error code: ${dataExtracted.codeResponse}")
-                            }
+                            // detectar tipo de error e intentar nuevamente hasta 3 veces
+                            checkCodeResponse(context, dataExtracted)
 
                             /** Se envia datos de error a Analytics */
                             SDAnalytics().eventErrorApiData(dataExtracted)

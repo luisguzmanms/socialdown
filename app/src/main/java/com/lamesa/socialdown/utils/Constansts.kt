@@ -37,6 +37,10 @@ object Constansts {
         var rewardedVideoAd: RewardedAd? = null
         var userReward: Boolean = false
     }
+
+    object Code {
+        var attemptsCode = 0
+    }
 }
 
 

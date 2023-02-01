@@ -24,7 +24,11 @@ object APIHelper {
     enum class CodeApi(val code: Int, val desc: String) {
         C_200(200, "success"),
         C_429(429, "MONTHLY quota for Requests"),
+        C_404(404, "Please try again later.\nLink is roung / private or there is unkown error!!\n"),
         C_403(403, "Please try again later.\nLink is roung / private or there is unkown error!!\n"),
+        C_501(501, "Please try again later.\nLink is roung / private or there is unkown error!!\n"),
+        C_502(502, "Please try again later.\nLink is roung / private or there is unkown error!!\n"),
+        C_504(504, "Please try again later.\nLink is roung / private or there is unkown error!!\n"),
         C_500(500, "Please try again later.\nLink is roung / private or there is unkown error!!\n")
     }
 
@@ -92,5 +96,6 @@ object APIHelper {
         }
     }
     // endregion
+
 
 }
