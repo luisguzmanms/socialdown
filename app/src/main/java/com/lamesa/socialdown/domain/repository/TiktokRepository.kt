@@ -25,6 +25,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.net.ConnectException
 import java.net.SocketException
 import javax.inject.Inject
 
@@ -116,6 +117,8 @@ constructor(
                 }
             } catch (e: SocketException) {
                 showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
+                showError("Please try again. ${e.message}")
             }
         }
 
@@ -187,6 +190,8 @@ constructor(
                 }
             } catch (e: SocketException) {
                 showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
+                showError("Please try again. ${e.message}")
             }
         }
 
@@ -257,6 +262,8 @@ constructor(
                     }
                 }
             } catch (e: SocketException) {
+                showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
                 showError("Please try again. ${e.message}")
             }
         }

@@ -23,6 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.net.ConnectException
 import java.net.SocketException
 
 class InstagramRepository(private val context: AppCompatActivity) {
@@ -114,6 +115,8 @@ class InstagramRepository(private val context: AppCompatActivity) {
                     }
                 }
             } catch (e: SocketException) {
+                showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
                 showError("Please try again. ${e.message}")
             }
         }

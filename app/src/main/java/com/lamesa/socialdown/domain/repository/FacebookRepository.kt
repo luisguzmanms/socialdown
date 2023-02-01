@@ -22,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.net.ConnectException
 import java.net.SocketException
 
 /** Created by luis Mesa on 07/08/22 */
@@ -105,6 +106,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
                 }
             } catch (e: SocketException) {
                 NotificationX.showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
+                NotificationX.showError("Please try again. ${e.message}")
             }
         }
 
@@ -185,6 +188,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
                     }
                 }
             } catch (e: SocketException) {
+                NotificationX.showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
                 NotificationX.showError("Please try again. ${e.message}")
             }
         }
