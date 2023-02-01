@@ -32,7 +32,7 @@ class DialogXUtils : DialogX() {
     object NotificationX {
         fun showError(message: String): PopNotification {
             SDAnalytics().eventError(message)
-            return PopNotification.show(message).iconError()
+            return PopNotification.show(message).iconError().showLong()
         }
 
         fun showMessage(message: String): PopNotification {
