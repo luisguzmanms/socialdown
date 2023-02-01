@@ -11,7 +11,9 @@ import android.webkit.URLUtil
 import com.lamesa.socialdown.R
 import com.lamesa.socialdown.app.SDApp.Context.resources
 import com.lamesa.socialdown.data.remote.APIHelper
+import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.downloader.DownloaderHelper
+import com.lamesa.socialdown.utils.Constansts.Code.attemptsCode
 import com.lamesa.socialdown.utils.Constansts.SHARE_APP_REQUEST_CODE
 import java.util.*
 
@@ -208,4 +210,16 @@ object SocialHelper {
             SHARE_APP_REQUEST_CODE
         )
     }
+
+    // detectar tipo de error e intentar nuevamente hasta 3 veces
+    fun checkCodeResponse(context: Context, dataExtracted: ModelMediaDataExtracted) {
+        if (attemptsCode < 3) {
+            searchByLink(context, dataExtracted.queryLink!!)
+            attemptsCode += 1
+        } else if (attemptsCode > 3) {
+            DialogXUtils.NotificationX.showError("Plese try again later --Error code: ${dataExtracted.codeResponse}")
+            attemptsCode = 0
+        }
+    }
+
 }

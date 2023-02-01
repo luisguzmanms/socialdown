@@ -38,51 +38,52 @@ class DownloadsViewHolder(private val context: Context, view: View) :
     private val binding = ItemMediaDownloadedBinding.bind(view)
 
     fun bind(media: ModelMediaDownloaded) {
-
-        when (media.fromApp) {
-            TIKTOK.id -> binding.ivTypeApp.setImageResource(AppDownloader.TIKTOK.iconOn)
-            INSTAGRAM.id -> {
-                binding.ivTypeApp.setImageResource(AppDownloader.INSTAGRAM.iconOn)
+        if (!fileDeleted(media)) {
+            when (media.fromApp) {
+                TIKTOK.id -> binding.ivTypeApp.setImageResource(AppDownloader.TIKTOK.iconOn)
+                INSTAGRAM.id -> {
+                    binding.ivTypeApp.setImageResource(AppDownloader.INSTAGRAM.iconOn)
+                }
+                FACEBOOK.id -> binding.ivTypeApp.setImageResource(AppDownloader.FACEBOOK.iconOn)
+                else -> {}
             }
-            FACEBOOK.id -> binding.ivTypeApp.setImageResource(AppDownloader.FACEBOOK.iconOn)
-            else -> {}
-        }
 
-        when (media.fromApp) {
-            TIKTOK.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_tiktok)
-            INSTAGRAM.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_insta)
-            FACEBOOK.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_face)
-            else -> binding.ivGradiant.setImageResource(drawable.gradiant_media_grey)
-        }
+            when (media.fromApp) {
+                TIKTOK.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_tiktok)
+                INSTAGRAM.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_insta)
+                FACEBOOK.id -> binding.ivGradiant.setImageResource(drawable.gradiant_media_face)
+                else -> binding.ivGradiant.setImageResource(drawable.gradiant_media_grey)
+            }
 
-        when (media.mediaType) {
-            VIDEO.type -> binding.ivTypePost.setImageResource(VIDEO.icon)
-            REEL.type -> binding.ivTypePost.setImageResource(REEL.icon)
-            STORY.type -> binding.ivTypePost.setImageResource(STORY.icon)
-            POST.type -> binding.ivTypePost.setImageResource(POST.icon)
-            IGTV.type -> binding.ivTypePost.setImageResource(IGTV.icon)
-            else -> binding.ivTypeApp.setImageResource(NONE.icon)
-        }
+            when (media.mediaType) {
+                VIDEO.type -> binding.ivTypePost.setImageResource(VIDEO.icon)
+                REEL.type -> binding.ivTypePost.setImageResource(REEL.icon)
+                STORY.type -> binding.ivTypePost.setImageResource(STORY.icon)
+                POST.type -> binding.ivTypePost.setImageResource(POST.icon)
+                IGTV.type -> binding.ivTypePost.setImageResource(IGTV.icon)
+                else -> binding.ivTypeApp.setImageResource(NONE.icon)
+            }
 
-        Glide.with(context)
-            .asBitmap()
-            .load(Uri.fromFile(File(media.filePatch)))
-            .placeholder(drawable.ic_download)
-            .centerCrop()
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .into(binding.ivMedia)
+            Glide.with(context)
+                .asBitmap()
+                .load(Uri.fromFile(File(media.filePatch)))
+                .placeholder(drawable.ic_download)
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .into(binding.ivMedia)
 
-        SDAnimation(context).setSDAnimation(
-            binding.content,
-            anim.anim_alpha_in
-        )
+            SDAnimation(context).setSDAnimation(
+                binding.content,
+                anim.anim_alpha_in
+            )
 
-        binding.content.setOnClickListener {
-            dialogOptions(media)
-        }
-        binding.content.setOnLongClickListener {
-            deleteItem(media)
-            true
+            binding.content.setOnClickListener {
+                dialogOptions(media)
+            }
+            binding.content.setOnLongClickListener {
+                deleteItem(media)
+                true
+            }
         }
     }
 
@@ -196,6 +197,17 @@ class DownloadsViewHolder(private val context: Context, view: View) :
         } else {
             DialogXUtils.ToastX.showError(context.getString(string.error_openFile))
         }
+    }
+
+    // Detectar si el usuario elimino archivos fuera de la app
+    private fun fileDeleted(media: ModelMediaDownloaded): Boolean {
+        if (!File(media.filePatch).exists()) {
+            CoroutineScope(Dispatchers.IO).launch {
+                DeleteMediaUseCase().invoke(media)
+            }
+            return true
+        }
+        return false
     }
 
 }

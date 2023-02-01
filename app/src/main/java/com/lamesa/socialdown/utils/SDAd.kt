@@ -172,7 +172,6 @@ class SDAd {
                             if ((1..2).random() == 2) {
                                 mInterstitialAd?.show(context as Activity)
                             }
-
                         }
                     } else {
                         Log.d("TAG", "The interstitial ad wasn't ready yet.")

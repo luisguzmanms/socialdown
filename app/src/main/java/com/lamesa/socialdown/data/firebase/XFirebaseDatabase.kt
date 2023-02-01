@@ -149,7 +149,7 @@ class XFirebaseDatabase : InterfaceFirebase {
                 val version = dataSnapshot.child(ref).child("version").getValue(Int::class.java)
                 val cancelable =
                     dataSnapshot.child(ref).child("cancelable").getValue(Boolean::class.java)
-                if (version != null && version < VERSION_CODE) {
+                if (version != null && version > VERSION_CODE) {
                     if (show != null && show) {
                         if (cancelable != null) {
                             if (cancelable) {

@@ -14,6 +14,7 @@ import com.lamesa.socialdown.utils.DialogXUtils.*
 import com.lamesa.socialdown.utils.SDAd
 import com.lamesa.socialdown.utils.SDAnalytics
 import com.lamesa.socialdown.utils.SocialHelper
+import com.lamesa.socialdown.utils.SocialHelper.checkCodeResponse
 import com.lamesa.socialdown.utils.SocialHelper.chooseRandomString
 import com.lamesa.socialdown.utils.SocialHelper.isOnline
 import com.orhanobut.logger.Logger
@@ -21,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.net.ConnectException
 import java.net.SocketException
 
 /** Created by luis Mesa on 07/08/22 */
@@ -88,25 +90,14 @@ class FacebookRepository(private val context: AppCompatActivity) {
                             Logger.d("!call.isSuccessful > call.code:: " + call.code())
                             Logger.d("!call.isSuccessful > call.raw:: " + call.raw())
 
+                            dataExtracted.queryLink = queryLink
                             dataExtracted.codeResponse = call.code().toString()
                             dataExtracted.body = call.body().toString()
                             dataExtracted.raw = call.raw().toString()
                             dataExtracted.key = dataKey
 
-                            when (dataExtracted.codeResponse) {
-                                APIHelper.CodeApi.C_500.code.toString() -> NotificationX.showError(
-                                    APIHelper.CodeApi.C_500.desc + " : $queryLink"
-                                ).showLong()
-                                APIHelper.CodeApi.C_403.code.toString() -> SocialHelper.searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                APIHelper.CodeApi.C_429.code.toString() -> SocialHelper.searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                else -> ToastX.showWarning("Error code: ${dataExtracted.codeResponse}")
-                            }
+                            // detectar tipo de error e intentar nuevamente hasta 3 veces
+                            checkCodeResponse(context, dataExtracted)
 
                             SDAnalytics().eventErrorApiData(dataExtracted)
                             SDAd().showInterAd(context)
@@ -114,6 +105,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
                     }
                 }
             } catch (e: SocketException) {
+                NotificationX.showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
                 NotificationX.showError("Please try again. ${e.message}")
             }
         }
@@ -186,20 +179,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
                             dataExtracted.raw = call.raw().toString()
                             dataExtracted.key = dataKey
 
-                            when (dataExtracted.codeResponse) {
-                                APIHelper.CodeApi.C_500.code.toString() -> NotificationX.showError(
-                                    APIHelper.CodeApi.C_500.desc + " : $queryLink"
-                                ).showLong()
-                                APIHelper.CodeApi.C_403.code.toString() -> SocialHelper.searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                APIHelper.CodeApi.C_429.code.toString() -> SocialHelper.searchByLink(
-                                    context,
-                                    queryLink
-                                )
-                                else -> ToastX.showWarning("Error code: ${dataExtracted.codeResponse}")
-                            }
+                            // detectar tipo de error e intentar nuevamente hasta 3 veces
+                            checkCodeResponse(context, dataExtracted)
 
                             SDAnalytics().eventErrorApiData(dataExtracted)
                             SDAd().showInterAd(context)
@@ -207,6 +188,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
                     }
                 }
             } catch (e: SocketException) {
+                NotificationX.showError("Please try again. ${e.message}")
+            } catch (e: ConnectException) {
                 NotificationX.showError("Please try again. ${e.message}")
             }
         }
