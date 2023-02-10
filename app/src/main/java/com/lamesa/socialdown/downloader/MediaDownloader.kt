@@ -13,7 +13,11 @@ import com.lamesa.socialdown.utils.SocialHelper
 import com.lamesa.socialdown.utils.SocialHelper.MediaType.*
 import com.lamesa.socialdown.utils.SocialHelper.checkExtensionFile
 import com.lamesa.socialdown.utils.timeNow
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
+import java.io.IOException
 import java.util.*
 
 
@@ -69,12 +73,20 @@ class MediaDownloader(private val context: Context) {
                 Date().timeNow()
             )
             if (URLUtil.isNetworkUrl(linkToDownload)) {
-                downloaderHelper.initSaveMedia(mediaDownloaded)
-                notificationDownloading = NotificationDownloading(context)
-                downloadManager = downloaderHelper.createDownloadManager()
-                downloadRequest =
-                    downloaderHelper.createDownloadRequest(linkToDownload, mediaDownloaded)
-                downloadManager!!.add(downloadRequest)
+                try {
+                    downloaderHelper.initSaveMedia(mediaDownloaded)
+                    notificationDownloading = NotificationDownloading(context)
+                    downloadManager = downloaderHelper.createDownloadManager()
+                    downloadRequest =
+                        downloaderHelper.createDownloadRequest(linkToDownload, mediaDownloaded)
+                    downloadManager!!.add(downloadRequest)
+                } catch (e: IOException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        DialogXUtils.LoadingX.hideLoading()
+                        DialogXUtils.NotificationX.showError("Please try again. ${e.message}")
+                            .showLong()
+                    }
+                }
             }
         }
     }
