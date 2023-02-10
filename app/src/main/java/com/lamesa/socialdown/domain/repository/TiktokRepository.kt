@@ -1,6 +1,7 @@
 package com.lamesa.socialdown.domain.repository
 
 import androidx.appcompat.app.AppCompatActivity
+import com.lamesa.socialdown.R
 import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.data.remote.RetrofitHelper
 import com.lamesa.socialdown.data.remote.api.APITiktok
@@ -11,6 +12,7 @@ import com.lamesa.socialdown.domain.response.tiktok.TikTokResMaatootz2
 import com.lamesa.socialdown.domain.response.tiktok.TiktokResYi005
 import com.lamesa.socialdown.downloader.DownloaderHelper
 import com.lamesa.socialdown.usecase.GetDataApiByIdUseCase
+import com.lamesa.socialdown.utils.DialogXUtils
 import com.lamesa.socialdown.utils.DialogXUtils.LoadingX
 import com.lamesa.socialdown.utils.DialogXUtils.NotificationX.showError
 import com.lamesa.socialdown.utils.DialogXUtils.ToastX
@@ -25,8 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.net.ConnectException
-import java.net.SocketException
+import java.io.IOException
 import javax.inject.Inject
 
 class TiktokRepository @Inject
@@ -53,14 +54,13 @@ constructor(
                     ToastX.showError("dataApi == null")
                 }
             }
-
     }
 
     private fun apiYi005(queryLink: String) {
-        var dataKey = chooseRandomString(dataApi.key!!)
+        val dataKey = chooseRandomString(dataApi.key!!)
         if (isOnline(context)) {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
                     val call: Response<TiktokResYi005> =
                         RetrofitHelper.getRetrofit(dataApi.baseUrl!!)
                             .create(APITiktok::class.java)
@@ -88,12 +88,12 @@ constructor(
 
                         } else {
                             /*
-                            if (call.code().toString() == "429") {
-                                // "You have exceeded the DAILY quota for Requests on your current plan,
-                                // BASIC. Upgrade your plan at
-                                // https://rapidapi.com/yi005/api/tiktok-download-without-watermark"
-                            }
-                             */
+                        if (call.code().toString() == "429") {
+                            // "You have exceeded the DAILY quota for Requests on your current plan,
+                            // BASIC. Upgrade your plan at
+                            // https://rapidapi.com/yi005/api/tiktok-download-without-watermark"
+                        }
+                         */
                             LoadingX.hideLoading()
                             Logger.i("Logger videos is call.body:: " + call.body().toString())
                             Logger.i("Logger videos is call.code:: " + call.code())
@@ -114,11 +114,18 @@ constructor(
                             SDAd().showInterAd(context)
                         }
                     }
+                } catch (e: IOException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        showError("Please try again. ${e.message}").showLong()
+                    }
+                } catch (e: java.lang.IllegalStateException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        DialogXUtils.NotificationX.showError(context.getString(R.string.exceptionJSON))
+                            .showLong()
+                    }
                 }
-            } catch (e: SocketException) {
-                showError("Please try again. ${e.message}")
-            } catch (e: ConnectException) {
-                showError("Please try again. ${e.message}")
             }
         }
 
@@ -143,8 +150,8 @@ constructor(
     private fun apiMaatootz(queryLink: String) {
         val dataKey = chooseRandomString(dataApi.key!!)
         if (isOnline(context)) {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
                     val call: Response<TikTokResMaatootz> =
                         RetrofitHelper.getRetrofit(dataApi.baseUrl!!)
                             .create(APITiktok::class.java)
@@ -187,11 +194,18 @@ constructor(
                             SDAd().showInterAd(context)
                         }
                     }
+                } catch (e: IOException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        showError("Please try again. ${e.message}").showLong()
+                    }
+                } catch (e: java.lang.IllegalStateException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        DialogXUtils.NotificationX.showError(context.getString(R.string.exceptionJSON))
+                            .showLong()
+                    }
                 }
-            } catch (e: SocketException) {
-                showError("Please try again. ${e.message}")
-            } catch (e: ConnectException) {
-                showError("Please try again. ${e.message}")
             }
         }
 
@@ -216,8 +230,8 @@ constructor(
     private fun apiMaatootz2(queryLink: String) {
         val dataKey = chooseRandomString(dataApi.key!!)
         if (isOnline(context)) {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
                     val call: Response<TikTokResMaatootz2> =
                         RetrofitHelper.getRetrofit(dataApi.baseUrl!!)
                             .create(APITiktok::class.java)
@@ -260,11 +274,18 @@ constructor(
                             SDAd().showInterAd(context)
                         }
                     }
+                } catch (e: IOException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        showError("Please try again. ${e.message}").showLong()
+                    }
+                } catch (e: java.lang.IllegalStateException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        DialogXUtils.NotificationX.showError(context.getString(R.string.exceptionJSON))
+                            .showLong()
+                    }
                 }
-            } catch (e: SocketException) {
-                showError("Please try again. ${e.message}")
-            } catch (e: ConnectException) {
-                showError("Please try again. ${e.message}")
             }
         }
 

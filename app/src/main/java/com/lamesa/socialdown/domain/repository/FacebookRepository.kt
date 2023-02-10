@@ -1,6 +1,7 @@
 package com.lamesa.socialdown.domain.repository
 
 import androidx.appcompat.app.AppCompatActivity
+import com.lamesa.socialdown.R
 import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.data.remote.RetrofitHelper
 import com.lamesa.socialdown.data.remote.api.APIFacebook
@@ -22,8 +23,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.net.ConnectException
-import java.net.SocketException
+import java.io.IOException
 
 /** Created by luis Mesa on 07/08/22 */
 class FacebookRepository(private val context: AppCompatActivity) {
@@ -52,8 +52,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
     private fun apiCrashbash(queryLink: String) {
         val dataKey = chooseRandomString(dataApi.key!!)
         if (isOnline(context)) {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
                     val call: Response<FaceResCrashBash> =
                         RetrofitHelper.getRetrofit(dataApi.baseUrl!!)
                             .create(APIFacebook::class.java)
@@ -103,11 +103,18 @@ class FacebookRepository(private val context: AppCompatActivity) {
                             SDAd().showInterAd(context)
                         }
                     }
+                } catch (e: IOException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        NotificationX.showError("Please try again. ${e.message}").showLong()
+                    }
+                } catch (e: java.lang.IllegalStateException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        NotificationX.showError(context.getString(R.string.exceptionJSON))
+                            .showLong()
+                    }
                 }
-            } catch (e: SocketException) {
-                NotificationX.showError("Please try again. ${e.message}")
-            } catch (e: ConnectException) {
-                NotificationX.showError("Please try again. ${e.message}")
             }
         }
 
@@ -132,8 +139,8 @@ class FacebookRepository(private val context: AppCompatActivity) {
     private fun apiVikas(queryLink: String) {
         val dataKey = chooseRandomString(dataApi.key!!)
         if (isOnline(context)) {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
                     val call: Response<FaceResVikar> =
                         RetrofitHelper.getRetrofit(dataApi.baseUrl!!)
                             .create(APIFacebook::class.java)
@@ -186,11 +193,18 @@ class FacebookRepository(private val context: AppCompatActivity) {
                             SDAd().showInterAd(context)
                         }
                     }
+                } catch (e: Exception) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        NotificationX.showError("Please try again. ${e.message}").showLong()
+                    }
+                } catch (e: java.lang.IllegalStateException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        NotificationX.showError(context.getString(R.string.exceptionJSON))
+                            .showLong()
+                    }
                 }
-            } catch (e: SocketException) {
-                NotificationX.showError("Please try again. ${e.message}")
-            } catch (e: ConnectException) {
-                NotificationX.showError("Please try again. ${e.message}")
             }
         }
 

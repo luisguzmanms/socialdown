@@ -174,13 +174,13 @@ class SDAd {
                             }
                         }
                     } else {
-                        Log.d("TAG", "The interstitial ad wasn't ready yet.")
+                        Log.d(TAG, "The interstitial ad wasn't ready yet.")
                     }
                 }
 
                 override fun onAdFailedToLoad(@NonNull loadAdError: LoadAdError) {
                     // Handle the error
-                    Log.d("SDad", loadAdError.toString())
+                    Log.d(TAG, loadAdError.toString())
                     mInterstitialAd = null
                     SDAnalytics().eventAdError(typeAd, loadAdError.message)
                 }
@@ -189,26 +189,26 @@ class SDAd {
         mInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdClicked() {
                 // Called when a click is recorded for an ad.
-                Log.d("SDad", "Ad was clicked.")
+                Log.d(TAG, "Ad was clicked.")
                 SDAnalytics().eventAdClicked(typeAd)
 
             }
 
             override fun onAdDismissedFullScreenContent() {
                 // Called when ad is dismissed.
-                Log.d("SDad", "Ad dismissed fullscreen content.")
+                Log.d(TAG, "Ad dismissed fullscreen content.")
                 mInterstitialAd = null
                 SDAnalytics().eventAdClosed(typeAd)
             }
 
             override fun onAdImpression() {
                 // Called when an impression is recorded for an ad.
-                Log.d("SDad", "Ad recorded an impression.")
+                Log.d(TAG, "Ad recorded an impression.")
             }
 
             override fun onAdShowedFullScreenContent() {
                 // Called when ad is shown.
-                Log.d("SDad", "Ad showed fullscreen content.")
+                Log.d(TAG, "Ad showed fullscreen content.")
                 SDAnalytics().eventAdOpened(typeAd)
             }
         }
@@ -228,6 +228,7 @@ class SDAd {
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     Log.d(TAG, adError.toString())
                     rewardedInterstitialAd = null
+                    SDAnalytics().eventAdError(typeAd, adError.message)
                 }
             })
     }
@@ -262,6 +263,7 @@ class SDAd {
                             // Called when ad fails to show.
                             Log.e(TAG, "Ad failed to show fullscreen content.")
                             rewardedInterstitialAd = null
+                            SDAnalytics().eventAdError(typeAd, adError.message)
                         }
 
                         override fun onAdImpression() {
@@ -352,24 +354,28 @@ class SDAd {
         }
     }
 
-    internal fun showAdToDodwnload(context: Context, dialog: BottomDialog?) {
-        when ((1..2).random()) {
-            1 -> showVideoAd(context, dialog)
-            2 -> showInterBonAd(context, dialog)
+    internal fun showAdToDownload(context: Context, dialog: BottomDialog?, typeAd: Int) {
+        when (typeAd) {
+            1 -> showInterBonAd(context, dialog)
+            2 -> showVideoAd(context, dialog)
             // Si el número aleatorio es cualquier otro valor
             else -> {}
         }
     }
 
-    internal fun adToDownloadIsLoad(): Boolean {
+    internal fun adToDownloadIsLoaded(context: Context): Int {
         if (tinyDB.getBoolean(HasRated)) {
-            if ((1..4).random() != 2) {
-                if (rewardedVideoAd != null || rewardedInterstitialAd != null) {
-                    return true
-                }
+            return if (rewardedInterstitialAd != null) {
+                1
+            } else if (rewardedVideoAd != null) {
+                2
+            } else {
+                loadInterBonAd(context)
+                loadVideoAd(context)
+                0
             }
         }
-        return false
+        return 0
     }
 
 }

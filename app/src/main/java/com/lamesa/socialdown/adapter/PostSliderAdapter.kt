@@ -17,7 +17,6 @@ import com.lamesa.socialdown.utils.SocialHelper
 /** Created by luis Mesa on 1/10/22 */
 class PostSliderAdapter(private val context: Context, private var mediaList: List<String>) :
     PagerAdapter() {
-
     private var listToDownload = mutableListOf<String>()
     private var listPositionSelected = mutableListOf<Int>()
 

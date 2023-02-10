@@ -15,6 +15,7 @@ import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.downloader.DownloaderHelper
 import com.lamesa.socialdown.utils.Constansts.Code.attemptsCode
 import com.lamesa.socialdown.utils.Constansts.SHARE_APP_REQUEST_CODE
+import com.lamesa.socialdown.utils.DialogXUtils.NotificationX.showError
 import java.util.*
 
 object SocialHelper {
@@ -77,7 +78,7 @@ object SocialHelper {
                 }
             }
         }
-        DialogXUtils.NotificationX.showError(context.getString(R.string.text_NoInternetConnection))
+        showError(context.getString(R.string.text_NoInternetConnection))
         return false
     }
 
@@ -188,14 +189,14 @@ object SocialHelper {
                         context,
                         APIHelper.AppApi.FACEBOOK, queryLink
                     )
-                    else -> DialogXUtils.NotificationX.showError(context.getString(R.string.text_linkNoSupported) + " : " + queryLink)
+                    else -> showError(context.getString(R.string.text_linkNoSupported) + " : " + queryLink)
                 }
             } else {
-                DialogXUtils.NotificationX.showError(context.getString(R.string.text_linkNotValid) + " : $queryLink")
+                showError(context.getString(R.string.text_linkNotValid) + " : $queryLink")
                 SDAd().showInterAd(context)
             }
         } else {
-            DialogXUtils.NotificationX.showError(context.getString(R.string.text_NoInternetConnection))
+            showError(context.getString(R.string.text_NoInternetConnection))
         }
     }
 
@@ -217,7 +218,7 @@ object SocialHelper {
             searchByLink(context, dataExtracted.queryLink!!)
             attemptsCode += 1
         } else if (attemptsCode > 3) {
-            DialogXUtils.NotificationX.showError("Plese try again later --Error code: ${dataExtracted.codeResponse}")
+            showError("Plese try again later --Error code: ${dataExtracted.codeResponse}")
             attemptsCode = 0
         }
     }

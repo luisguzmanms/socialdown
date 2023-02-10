@@ -13,7 +13,7 @@ import com.kongzue.dialogx.dialogs.BottomDialog
 import com.kongzue.dialogx.interfaces.DialogLifecycleCallback
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.lamesa.socialdown.R
-import com.lamesa.socialdown.adapter.PostSlideAdapter
+import com.lamesa.socialdown.adapter.PostSliderAdapter
 import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
@@ -62,7 +62,7 @@ class DownloaderHelper(private val context: Context) {
 
         return DownloadManager.Builder().context(context)
             .downloader(OkHttpDownloader.create(client))
-            .threadPoolSize(3)
+            .threadPoolSize(6)
             .logger { message -> Log.d(TAG, message) }
             .build()
     }
@@ -192,7 +192,7 @@ class DownloaderHelper(private val context: Context) {
                 val viewpager = v?.findViewById<ViewPager>(R.id.viewpager)
                 val btnDownloadUnLock = v?.findViewById<MaterialButton>(R.id.btn_download_unlock)
                 val btnDownloadLock = v?.findViewById<MaterialButton>(R.id.btn_download_lock)
-                val viewPagerAdapter = PostSlideAdapter(context, linkPosts!!)
+                val viewPagerAdapter = PostSliderAdapter(context, linkPosts!!)
                 viewpager?.adapter = viewPagerAdapter
                 val indicator = v?.findViewById<CircleIndicator>(R.id.indicator)
                 indicator?.setViewPager(viewpager)
@@ -214,11 +214,15 @@ class DownloaderHelper(private val context: Context) {
                 //endregion
 
                 //region Decidir si mostrar anuncio para desbloquear descarga
-                if (SDAd().adToDownloadIsLoad()) {
+                if (SDAd().adToDownloadIsLoaded(context) != 0) {
                     btnDownloadLock!!.visibility = View.VISIBLE
                     btnDownloadLock.setOnClickListener {
                         if (viewPagerAdapter.getlistToDownload().isNotEmpty()) {
-                            SDAd().showAdToDodwnload(context, dialog)
+                            SDAd().showAdToDownload(
+                                context,
+                                dialog,
+                                SDAd().adToDownloadIsLoaded(context)
+                            )
                             // si se cierra el dialogo desde onAdDismissedFullScreenContent, se iniciara la descarga
                             dialog!!.dialogLifecycleCallback =
                                 object : DialogLifecycleCallback<BottomDialog?>() {

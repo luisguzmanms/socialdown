@@ -1,6 +1,7 @@
 package com.lamesa.socialdown.domain.repository
 
 import androidx.appcompat.app.AppCompatActivity
+import com.lamesa.socialdown.R
 import com.lamesa.socialdown.data.remote.APIHelper.AppApi
 import com.lamesa.socialdown.data.remote.RetrofitHelper
 import com.lamesa.socialdown.data.remote.api.APIInsta
@@ -23,8 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import java.net.ConnectException
-import java.net.SocketException
+import java.io.IOException
 
 class InstagramRepository(private val context: AppCompatActivity) {
 
@@ -52,10 +52,10 @@ class InstagramRepository(private val context: AppCompatActivity) {
     }
 
     private fun apiMaatootz(queryLink: String) {
-        var dataKey = chooseRandomString(dataApi.key!!)
+        val dataKey = chooseRandomString(dataApi.key!!)
         if (isOnline(context)) {
-            try {
-                CoroutineScope(Dispatchers.IO).launch {
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
                     val call: Response<InstaResMaatootz> =
                         RetrofitHelper
                             .getRetrofit(dataApi.baseUrl!!)
@@ -113,14 +113,20 @@ class InstagramRepository(private val context: AppCompatActivity) {
                             SDAd().showInterAd(context)
                         }
                     }
+                } catch (e: IOException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        showError("Please try again. ${e.message}").showLong()
+                    }
+                } catch (e: java.lang.IllegalStateException) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        LoadingX.hideLoading()
+                        showError(context.getString(R.string.exceptionJSON))
+                            .showLong()
+                    }
                 }
-            } catch (e: SocketException) {
-                showError("Please try again. ${e.message}")
-            } catch (e: ConnectException) {
-                showError("Please try again. ${e.message}")
             }
         }
-
     }
 }
 

@@ -48,5 +48,6 @@
     <string name="text_share">Share App</string>
     <string name="text_download">Download</string>
     <string name="msd_congratulations">Congratulations we hope youre enjoying the app.\n\nHave you not yet rated SocialDown on the app store? Your feedback is valuable to us and it helps us continue improving.\n\nThanks for using SocialDown! ❤</string>
+    <string name="exceptionJSON">Downloading this type of file is not supported.</string>
     />
 </resources>
