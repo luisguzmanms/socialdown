@@ -214,10 +214,10 @@ object SocialHelper {
 
     // detectar tipo de error e intentar nuevamente hasta 3 veces
     fun checkCodeResponse(context: Context, dataExtracted: ModelMediaDataExtracted) {
-        if (attemptsCode < 3) {
+        if (attemptsCode < 5) {
             searchByLink(context, dataExtracted.queryLink!!)
             attemptsCode += 1
-        } else if (attemptsCode > 3) {
+        } else if (attemptsCode > 5) {
             showError("Plese try again later --Error code: ${dataExtracted.codeResponse}")
             attemptsCode = 0
         }

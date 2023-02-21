@@ -14,9 +14,12 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
+import com.jirbo.adcolony.AdColonyAdapter
+import com.jirbo.adcolony.AdColonyBundleBuilder
 import com.kongzue.dialogx.dialogs.BottomDialog
 import com.lamesa.socialdown.app.SDApp.Context.tinyDB
 import com.lamesa.socialdown.databinding.ActivityMainBinding
+import com.lamesa.socialdown.utils.Constansts.Ad.mInterstitialAd
 import com.lamesa.socialdown.utils.Constansts.Ad.rewardedInterstitialAd
 import com.lamesa.socialdown.utils.Constansts.Ad.rewardedVideoAd
 import com.lamesa.socialdown.utils.Constansts.Ad.userReward
@@ -26,7 +29,7 @@ import com.lamesa.socialdown.utils.Constansts.Analytics.HasRated
 class SDAd {
 
     private var TAG = "SDAd"
-    private var mInterstitialAd: InterstitialAd? = null
+
 
     // for testing
     /*
@@ -158,24 +161,22 @@ class SDAd {
         }
     }
 
-    internal fun showInterAd(context: Context) {
+    internal fun loadInterAd(context: Context) {
         val typeAd = "InterAd"
-        val adRequest: AdRequest = AdRequest.Builder().build()
-        InterstitialAd.load(context, "ca-app-pub-1553194436365145/9410097958", adRequest,
+        AdColonyBundleBuilder.setShowPrePopup(true)
+        AdColonyBundleBuilder.setShowPostPopup(true)
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdColonyAdapter::class.java, AdColonyBundleBuilder.build())
+            .build()
+        InterstitialAd.load(
+            context,
+            "ca-app-pub-1553194436365145/9410097958",
+            adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(@NonNull interstitialAd: InterstitialAd) {
                     // The mInterstitialAd reference will be null until
                     // an ad is loaded.c
                     mInterstitialAd = interstitialAd
-                    if (mInterstitialAd != null) {
-                        if (Build.VERSION.SDK_INT != 23) {
-                            if ((1..2).random() == 2) {
-                                mInterstitialAd?.show(context as Activity)
-                            }
-                        }
-                    } else {
-                        Log.d(TAG, "The interstitial ad wasn't ready yet.")
-                    }
                 }
 
                 override fun onAdFailedToLoad(@NonNull loadAdError: LoadAdError) {
@@ -191,13 +192,13 @@ class SDAd {
                 // Called when a click is recorded for an ad.
                 Log.d(TAG, "Ad was clicked.")
                 SDAnalytics().eventAdClicked(typeAd)
-
             }
 
             override fun onAdDismissedFullScreenContent() {
                 // Called when ad is dismissed.
                 Log.d(TAG, "Ad dismissed fullscreen content.")
                 mInterstitialAd = null
+                loadInterAd(context)
                 SDAnalytics().eventAdClosed(typeAd)
             }
 
@@ -215,9 +216,21 @@ class SDAd {
 
     }
 
+    fun showInterAd(context: Context) {
+        if (mInterstitialAd != null) {
+            if (Build.VERSION.SDK_INT != 23) {
+                mInterstitialAd?.show(context as Activity)
+            }
+        } else {
+            loadInterAd(context)
+            Log.d(TAG, "The interstitial ad wasn't ready yet.")
+        }
+    }
+
     internal fun loadInterBonAd(context: Context) {
         val typeAd = "InterBonAd"
-        RewardedInterstitialAd.load(context,
+        RewardedInterstitialAd.load(
+            context,
             "ca-app-pub-1553194436365145/4756588375", // ca-app-pub-1553194436365145/4756588375 --- // ca-app-pub-1553194436365145/9410097958
             AdRequest.Builder().build(),
             object : RewardedInterstitialAdLoadCallback() {
@@ -296,11 +309,15 @@ class SDAd {
 
     internal fun loadVideoAd(context: Context) {
         val typeAd = "VideoAd"
+        AdColonyBundleBuilder.setShowPrePopup(true)
+        AdColonyBundleBuilder.setShowPostPopup(true)
+        val adRequest = AdRequest.Builder()
+            .addNetworkExtrasBundle(AdColonyAdapter::class.java, AdColonyBundleBuilder.build())
+            .build()
         RequestConfiguration.Builder().setTestDeviceIds(listOf("A17F472B7E1F5BD692CD53DBE3100647"))
-        RewardedAd.load(
-            context,
+        RewardedAd.load(context,
             "ca-app-pub-1553194436365145/1196566017",
-            AdRequest.Builder().build(),
+            adRequest,
             object : RewardedAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedAd) {
                     rewardedVideoAd = ad
@@ -314,25 +331,23 @@ class SDAd {
         if (rewardedVideoAd != null) {
             if (Build.VERSION.SDK_INT != 23) {
                 // listener de anuncio
-                rewardedVideoAd!!.fullScreenContentCallback =
-                    object : FullScreenContentCallback() {
-                        override fun onAdShowedFullScreenContent() {
-                            // Code to be invoked when the ad showed full screen content.
-                            SDAnalytics().eventAdOpened(typeAd)
-                        }
+                rewardedVideoAd!!.fullScreenContentCallback = object : FullScreenContentCallback() {
+                    override fun onAdShowedFullScreenContent() {
+                        // Code to be invoked when the ad showed full screen content.
+                        SDAnalytics().eventAdOpened(typeAd)
+                    }
 
-                        override fun onAdDismissedFullScreenContent() {
-                            // Code to be invoked when the ad dismissed full screen content.
-                            SDAnalytics().eventAdClosed(typeAd)
-                            loadVideoAd(context)
-                            if (userReward && dialog != null) {
-                                dialog.dismiss()
-                            }
+                    override fun onAdDismissedFullScreenContent() {
+                        // Code to be invoked when the ad dismissed full screen content.
+                        SDAnalytics().eventAdClosed(typeAd)
+                        loadVideoAd(context)
+                        if (userReward && dialog != null) {
+                            dialog.dismiss()
                         }
                     }
+                }
                 // mostrar anuncio
-                rewardedVideoAd!!.show(
-                    context as Activity,
+                rewardedVideoAd!!.show(context as Activity,
                     OnUserEarnedRewardListener { rewardItem ->
                         SDAnalytics().eventUserReward(typeAd)
                         userReward = true
@@ -354,28 +369,20 @@ class SDAd {
         }
     }
 
-    internal fun showAdToDownload(context: Context, dialog: BottomDialog?, typeAd: Int) {
-        when (typeAd) {
-            1 -> showInterBonAd(context, dialog)
-            2 -> showVideoAd(context, dialog)
-            // Si el número aleatorio es cualquier otro valor
-            else -> {}
-        }
+    internal fun showAdToDownload(context: Context, dialog: BottomDialog?) {
+        showVideoAd(context, dialog)
     }
 
-    internal fun adToDownloadIsLoaded(context: Context): Int {
+
+    internal fun adToDownloadIsLoaded(context: Context): Boolean {
         if (tinyDB.getBoolean(HasRated)) {
-            return if (rewardedInterstitialAd != null) {
-                1
-            } else if (rewardedVideoAd != null) {
-                2
+            return if (rewardedVideoAd != null) {
+                true
             } else {
-                loadInterBonAd(context)
                 loadVideoAd(context)
-                0
+                false
             }
         }
-        return 0
+        return false
     }
-
 }
