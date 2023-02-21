@@ -1,5 +1,6 @@
 package com.lamesa.socialdown.utils
 
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 
@@ -36,6 +37,7 @@ object Constansts {
         var rewardedInterstitialAd: RewardedInterstitialAd? = null
         var rewardedVideoAd: RewardedAd? = null
         var userReward: Boolean = false
+        var mInterstitialAd: InterstitialAd? = null
     }
 
     object Code {

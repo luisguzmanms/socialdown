@@ -214,14 +214,13 @@ class DownloaderHelper(private val context: Context) {
                 //endregion
 
                 //region Decidir si mostrar anuncio para desbloquear descarga
-                if (SDAd().adToDownloadIsLoaded(context) != 0) {
+                if (SDAd().adToDownloadIsLoaded(context)) {
                     btnDownloadLock!!.visibility = View.VISIBLE
                     btnDownloadLock.setOnClickListener {
                         if (viewPagerAdapter.getlistToDownload().isNotEmpty()) {
                             SDAd().showAdToDownload(
                                 context,
-                                dialog,
-                                SDAd().adToDownloadIsLoaded(context)
+                                dialog
                             )
                             // si se cierra el dialogo desde onAdDismissedFullScreenContent, se iniciara la descarga
                             dialog!!.dialogLifecycleCallback =
