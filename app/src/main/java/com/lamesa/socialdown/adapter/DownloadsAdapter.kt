@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lamesa.socialdown.R.anim
 import com.lamesa.socialdown.R.layout
 import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
-import com.lamesa.socialdown.view.common.DownloadsViewHolder
+import com.lamesa.socialdown.ui.view.common.DownloadsViewHolder
 
 /** Created by luis Mesa on 08/08/22 */
 class DownloadsAdapter(private val context: Context) : RecyclerView.Adapter<DownloadsViewHolder>() {

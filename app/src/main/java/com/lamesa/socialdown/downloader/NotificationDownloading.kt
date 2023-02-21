@@ -11,7 +11,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.lamesa.socialdown.R
-import com.lamesa.socialdown.view.main.MainActivity
+import com.lamesa.socialdown.ui.view.main.MainActivity
 import java.util.*
 
 class NotificationDownloading(val context: Context) {

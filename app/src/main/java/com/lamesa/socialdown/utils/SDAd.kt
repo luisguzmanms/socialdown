@@ -197,7 +197,6 @@ class SDAd {
             override fun onAdDismissedFullScreenContent() {
                 // Called when ad is dismissed.
                 Log.d(TAG, "Ad dismissed fullscreen content.")
-                mInterstitialAd = null
                 loadInterAd(context)
                 SDAnalytics().eventAdClosed(typeAd)
             }
@@ -209,6 +208,7 @@ class SDAd {
 
             override fun onAdShowedFullScreenContent() {
                 // Called when ad is shown.
+                mInterstitialAd = null
                 Log.d(TAG, "Ad showed fullscreen content.")
                 SDAnalytics().eventAdOpened(typeAd)
             }

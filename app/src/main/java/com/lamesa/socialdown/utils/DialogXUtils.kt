@@ -21,10 +21,10 @@ import com.kongzue.dialogx.util.TextInfo
 import com.lamesa.socialdown.R
 import com.lamesa.socialdown.app.SDApp.Context.tinyDB
 import com.lamesa.socialdown.downloader.PermissionsUtil
+import com.lamesa.socialdown.ui.view.main.MainActivity
 import com.lamesa.socialdown.utils.Constansts.Analytics.HasRated
 import com.lamesa.socialdown.utils.Constansts.Analytics.TBDownloads
 import com.lamesa.socialdown.utils.SocialHelper.shareApp
-import com.lamesa.socialdown.view.main.MainActivity
 import net.khirr.android.privacypolicy.PrivacyPolicyDialog
 
 class DialogXUtils : DialogX() {

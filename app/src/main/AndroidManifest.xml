@@ -18,9 +18,10 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true"
+        android:hardwareAccelerated="true"
         tools:targetApi="31">
         <activity
-            android:name=".view.splash.SplashActivity"
+            android:name=".ui.view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,10 +29,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".ui.view.main.MainActivity"
             android:exported="true"></activity>
         <activity
-            android:name=".view.share.ShareActivity"
+            android:name=".ui.view.share.ShareActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

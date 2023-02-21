@@ -13,8 +13,8 @@ android {
         applicationId "com.lamesa.socialdown"
         minSdk 21
         targetSdk 32
-        versionCode 8
-        versionName "1.2.5 beta"
+        versionCode 9
+        versionName "1.2.6 beta"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -62,7 +62,7 @@ dependencies {
     implementation project(path: ':htextview-scale')
     implementation project(path: ':htextview-fade')
     implementation project(path: ':htextview-base')
-    implementation 'com.google.firebase:firebase-common-ktx:20.2.0'
+    implementation 'com.google.firebase:firebase-common-ktx:20.3.0'
     implementation 'com.google.android.play:review-ktx:2.0.1'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
@@ -121,7 +121,7 @@ dependencies {
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
     // Admob
-    implementation 'com.google.android.gms:play-services-ads:21.4.0'
+    implementation 'com.google.android.gms:play-services-ads:21.5.0'
 
     // Android-Privacy-Policy
     implementation 'com.github.khirr:Android-Privacy-Policy:1.0.1'
