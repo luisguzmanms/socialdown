@@ -84,6 +84,9 @@ class SDAnalytics {
             param("Key", dataExtracted.key!!)
         }
         //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(ErrorApiData, props)
+        //endregion
     }
 
     fun eventError(msg: String) {
@@ -114,6 +117,9 @@ class SDAnalytics {
             param("TypeMedia", modelMediaDownloaded.mediaType)
         }
         //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(MediaDownloaded, props)
+        //endregion
         // Aumentar contador de descargas en Mixpanel
         tinyDB.putInt(TBDownloads, tinyDB.getInt(TBDownloads) + 1)
         mixpanel.people.withIdentity(mixpanel.distinctId).increment("Downloads", 1.0)
@@ -136,6 +142,9 @@ class SDAnalytics {
             param("Error", error)
         }
         //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(FailureDownload, props)
+        //endregion
     }
 
     fun eventTiming(): MixpanelAPI {
@@ -154,6 +163,9 @@ class SDAnalytics {
             param("Ad", type)
         }
         //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventAdClicked, props)
+        //endregion
     }
 
     fun eventAdOpened(type: String) {
@@ -167,6 +179,9 @@ class SDAnalytics {
             param("Ad", type)
         }
         //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventAdOpened, props)
+        //endregion
     }
 
     fun eventAdClosed(type: String) {
@@ -179,6 +194,9 @@ class SDAnalytics {
         firebaseAnalytics.logEvent(EventAdClosed) {
             param("Ad", type)
         }
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventAdClosed, props)
         //endregion
     }
 
@@ -195,6 +213,9 @@ class SDAnalytics {
                 param("Ad", type)
                 param("Error", errorMessage)
             }
+            //endregion
+            //region Amplitude Analytics
+            Amplitude.getInstance().logEvent(EventAdError, props)
             //endregion
             EventAdErrorSend = errorMessage
         }
@@ -284,5 +305,26 @@ class SDAnalytics {
         Amplitude.getInstance().logEvent(EventViewStars, props)
         //endregion
     }
+
+    fun eventUserReward(type: String) {
+        //region Analytics
+        val props = JSONObject()
+        props.put("Ad", type)
+        props.put("Event", EventAdUserReward)
+        mixpanel.track(EventAdUserReward, props)
+        //endregion
+        //region Firebase Analytics
+        firebaseAnalytics.logEvent(EventAdUserReward) {
+            param("Ad", type)
+            param("Event", EventAdUserReward)
+        }
+        //endregion
+        //region Amplitude Analytics
+        Amplitude.getInstance().logEvent(EventAdUserReward, props)
+        //endregion
+        tinyDB.putInt(EventAdUserReward, tinyDB.getInt(EventAdUserReward) + 1)
+        mixpanel.people.withIdentity(mixpanel.distinctId).increment(EventAdUserReward, 1.0)
+    }
+
 
 }
