@@ -40,9 +40,9 @@ class DownloadsAdapter(private val context: Context) : RecyclerView.Adapter<Down
         holder.bind(media)
     }
 
-    internal fun updateList(newList: ArrayList<ModelMediaDownloaded>) {
+    internal fun updateList(newList: List<ModelMediaDownloaded>) {
         listMedia.clear()
-        listMedia.addAll(newList)
+        listMedia = ArrayList(newList)
     }
 
     private fun setAnimation(viewToAnimate: View, position: Int) {
