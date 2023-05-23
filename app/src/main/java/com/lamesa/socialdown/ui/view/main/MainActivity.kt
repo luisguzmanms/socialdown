@@ -18,7 +18,6 @@ import com.lamesa.socialdown.adapter.DownloadsAdapter
 import com.lamesa.socialdown.app.SDApp.Context.tinyDB
 import com.lamesa.socialdown.data.remote.APIHelper.AppApi.*
 import com.lamesa.socialdown.databinding.ActivityMainBinding
-import com.lamesa.socialdown.domain.model.room.ModelMediaDownloaded
 import com.lamesa.socialdown.ui.viewmodel.MainViewModel
 import com.lamesa.socialdown.ui.viewmodel.MainViewModelFactory
 import com.lamesa.socialdown.usecase.GetCustomMsgUseCase
@@ -96,13 +95,13 @@ class MainActivity : AppCompatActivity() {
                 dialogStars(this)
                 binding.cnEmpty.visibility = View.GONE
                 it.let {
-                    adapter.updateList(it as ArrayList<ModelMediaDownloaded>)
+                    adapter.updateList(it)
                     adapter.notifyDataSetChanged()
                     binding.tvDownloadCount.visibility = View.VISIBLE
                     binding.tvDownloadCount.text = "${it.size} files"
                 }
             } else {
-                adapter.updateList(it as ArrayList<ModelMediaDownloaded>)
+                adapter.updateList(it)
                 adapter.notifyDataSetChanged()
                 binding.cnEmpty.visibility = View.VISIBLE
                 binding.tvDownloadCount.visibility = View.INVISIBLE
