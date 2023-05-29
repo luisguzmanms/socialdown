@@ -29,7 +29,7 @@ object PermissionsUtil {
     }
 
     fun requestWriteStoragePermission(activity: Activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(
                 activity,
                 arrayOf(
