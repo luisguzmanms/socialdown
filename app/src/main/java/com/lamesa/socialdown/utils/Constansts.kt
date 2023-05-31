@@ -43,6 +43,13 @@ object Constansts {
     object Code {
         var attemptsCode = 0
     }
+
+    object TinyDB {
+        const val TB_DOWNLOADS_COUNT_KEY = "download_count"
+        const val TB_LAST_DOWNLOAD_DAY_KEY = "last_download_time"
+        const val TB_MAX_DOWNLOADS_PER_DAY = 4
+    }
+
 }
 
 
