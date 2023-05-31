@@ -13,7 +13,11 @@ import com.google.android.gms.tasks.Task
 import com.google.android.play.core.review.ReviewInfo
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.kongzue.dialogx.DialogX
-import com.kongzue.dialogx.dialogs.*
+import com.kongzue.dialogx.dialogs.BottomDialog
+import com.kongzue.dialogx.dialogs.BottomMenu
+import com.kongzue.dialogx.dialogs.MessageDialog
+import com.kongzue.dialogx.dialogs.PopNotification
+import com.kongzue.dialogx.dialogs.PopTip
 import com.kongzue.dialogx.impl.ActivityLifecycleImpl.getApplicationContext
 import com.kongzue.dialogx.interfaces.OnBindView
 import com.kongzue.dialogx.interfaces.OnIconChangeCallBack
@@ -538,10 +542,20 @@ class DialogXUtils : DialogX() {
         SDAd().showInterOrVideo(context)
     }
 
+    internal fun dialogLimitDownloads(context: Context) {
+        MessageDialog.show(
+            context.getString(R.string.dialog_title_limit_reached),
+            context.getString(R.string.dialog_message_limit_reached),
+            context.getString(R.string.dialog_button_ok),
+            context.getString(R.string.dialog_button_close)
+        ).okButton = context.getString(R.string.dialog_button_ok)
+    }
+
+
     internal fun dialogCongratulations(context: Context) {
         val textInfo = TextInfo()
         textInfo.gravity = Gravity.CENTER
-        for (i in 10..100 step 10) {
+        for (i in 10..100 step 30) {
             if (tinyDB.getInt(TBDownloads) == i) {
                 MessageDialog.show(
                     i.toString() + " " + context.getString(R.string.text_Downloads) + "! " + "\uD83E\uDD73 \uD83C\uDF89",

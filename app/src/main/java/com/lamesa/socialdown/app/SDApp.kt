@@ -5,6 +5,7 @@ import android.content.res.Resources
 import com.amplitude.api.Amplitude
 import com.google.ads.mediation.inmobi.InMobiConsent
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.database.ktx.database
@@ -84,12 +85,12 @@ class SDApp : Application() {
     private fun initMobileAds() {
         MobileAds.initialize(this)
 
-        /*
+
         val configuration = RequestConfiguration.Builder()
             .setTestDeviceIds(listOf("A17F472B7E1F5BD692CD53DBE3100647")).build()
         MobileAds.setRequestConfiguration(configuration)
 
-         */
+
 
         //region Unity Ads
         val gdprMetaData = MetaData(this)
