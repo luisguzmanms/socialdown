@@ -46,5 +46,11 @@
     <string name="text_download">Descargar</string>
     <string name="msd_congratulations">Enhorabuena, esperamos que estés disfrutando de la aplicación.\n\n¿Aún no has valorado SocialDown en la App Store?\n\nTus comentarios son valiosos para nosotros y nos ayudan a seguir mejorando.\n\n¡Gracias por usar SocialDown!</string>
     <string name="exceptionJSON">Downloading this type of file is not supported.</string>
+
+    <string name="dialog_title_limit_reached">Límite Diario de Descargas Alcanzado</string>
+    <string name="dialog_message_limit_reached">¡Gracias por usar SocialDown! Has alcanzado tu límite diario para descargar videos de Facebook, Instagram y TikTok. Este límite nos ayuda a mantener nuestro servicio y garantizar que todos los usuarios tengan acceso a las descargas.\n\nPero no te preocupes, tu límite se restablecerá en 24 horas y podrás continuar descargando tus videos favoritos. \n\nMientras tanto, no dudes en navegar por los videos que ya has descargado, o planificar los videos que quieres descargar mañana.\n\nApreciamos tu comprensión. ¡Feliz navegación!</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_close">CERRAR</string>
+
     />
 </resources>

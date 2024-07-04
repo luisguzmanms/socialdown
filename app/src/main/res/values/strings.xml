@@ -49,5 +49,10 @@
     <string name="text_download">Download</string>
     <string name="msd_congratulations">Congratulations we hope youre enjoying the app.\n\nHave you not yet rated SocialDown on the app store? Your feedback is valuable to us and it helps us continue improving.\n\nThanks for using SocialDown! ❤</string>
     <string name="exceptionJSON">Downloading this type of file is not supported.</string>
+
+    <string name="dialog_title_limit_reached">Daily Download Limit Reached</string>
+    <string name="dialog_message_limit_reached">Thank you for using SocialDown! You have reached your daily limit for downloading videos from Facebook, Instagram, and TikTok. This limit helps us maintain our service and ensure all users have access to downloads.\n\nBut don\'t worry, your limit will reset in 24 hours and you can continue downloading your favourite videos. \n\nIn the meantime, feel free to browse the videos you\'ve already downloaded, or plan for the videos you want to download tomorrow.\n\nWe appreciate your understanding. Happy browsing!</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_close">CLOSE</string>
     />
 </resources>
