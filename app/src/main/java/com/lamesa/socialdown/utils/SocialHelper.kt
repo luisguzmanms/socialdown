@@ -9,6 +9,7 @@ import android.os.Build
 import android.util.Log
 import android.webkit.URLUtil
 import com.lamesa.socialdown.R
+import com.lamesa.socialdown.app.SDApp
 import com.lamesa.socialdown.app.SDApp.Context.resources
 import com.lamesa.socialdown.data.remote.APIHelper
 import com.lamesa.socialdown.domain.model.api.ModelMediaDataExtracted
@@ -16,7 +17,13 @@ import com.lamesa.socialdown.downloader.DownloaderHelper
 import com.lamesa.socialdown.utils.Constansts.Code.attemptsCode
 import com.lamesa.socialdown.utils.Constansts.SHARE_APP_REQUEST_CODE
 import com.lamesa.socialdown.utils.DialogXUtils.NotificationX.showError
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.Random
+import java.util.TimeZone
+import java.util.UUID
 
 object SocialHelper {
 
@@ -220,6 +227,31 @@ object SocialHelper {
         } else if (attemptsCode > 5) {
             showError("Plese try again later --Error code: ${dataExtracted.codeResponse}")
             attemptsCode = 0
+        }
+    }
+
+    fun updateDailyDownloadsCount(context: Context) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val defaultTimeZoneID = TimeZone.getDefault().id
+            val currentDateTime = WorldTimeUtil.fetchCurrentDateTime(defaultTimeZoneID)
+
+            if (currentDateTime != null) {
+                val currentDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+                val lastDownloadDay = SDApp.Context.tinyDB.getInt(Constansts.TinyDB.TB_LAST_DOWNLOAD_DAY_KEY)
+
+                if (currentDay != lastDownloadDay) {
+                    SDApp.Context.tinyDB.putInt(Constansts.TinyDB.TB_DOWNLOADS_COUNT_KEY, 1)
+                    SDApp.Context.tinyDB.putInt(Constansts.TinyDB.TB_LAST_DOWNLOAD_DAY_KEY, currentDay)
+                } else {
+                    val currentCount = SDApp.Context.tinyDB.getInt(Constansts.TinyDB.TB_DOWNLOADS_COUNT_KEY)
+
+                    if (currentCount >= Constansts.TinyDB.TB_MAX_DOWNLOADS_PER_DAY) {
+                        DialogXUtils().dialogLimitDownloads(context = context)
+                    } else {
+                        SDApp.Context.tinyDB.putInt(Constansts.TinyDB.TB_DOWNLOADS_COUNT_KEY, currentCount + 1)
+                    }
+                }
+            }
         }
     }
 
